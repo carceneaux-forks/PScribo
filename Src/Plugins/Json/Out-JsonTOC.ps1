@@ -23,6 +23,7 @@ function Out-JsonTOC
         $tocBuilder = New-Object -TypeName System.Text.StringBuilder
         [ref] $null = $tocBuilder.AppendFormat('"{0}": [', $TOC.Name).AppendLine()
 
+        $level = $null
         if ($Options.ContainsKey('EnableSectionNumbering'))
         {
             $maxSectionNumberLength = $Document.TOC.Number | ForEach-Object { $_.Length } | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum
@@ -41,11 +42,21 @@ function Out-JsonTOC
             $maxSectionNumberLength = $Document.TOC.Level | Sort-Object | Select-Object -Last 1
             foreach ($tocEntry in $Document.TOC)
             {
-                [ref] $null = $tocBuilder.Append('{')
-                $sectionNumberIndent = ''.PadRight($tocEntry.Level, ' ')
-                [ref] $null = $tocBuilder.AppendFormat('"{0}{1}"', $sectionNumberIndent, $tocEntry.Name)
-                [ref] $null = $tocBuilder.AppendLine('},')
+                if ($level -eq $tocEntry.Level)
+                {
+                    [ref] $null = $tocBuilder.AppendFormat('"{0}",', $tocEntry.Name).AppendLine()
+                }
+                else
+                {
+                    $level = $tocEntry.Level
+                    if ($tocEntry.Level -ne 0)
+                    {
+                        [ref] $null = $tocBuilder.AppendLine(']')
+                    }
+                    [ref] $null = $tocBuilder.AppendFormat('{"{0}": [', $tocEntry.Name).AppendLine()
+                }
             }
+            [ref] $null = $tocBuilder.AppendLine(']')
         }
 
         [ref] $null = $tocBuilder.AppendLine('],')
