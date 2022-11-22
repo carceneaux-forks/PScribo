@@ -34,19 +34,32 @@ function Out-JsonTOC {
         else {
             $maxSectionNumberLength = $Document.TOC.Level | Sort-Object | Select-Object -Last 1
             foreach ($tocEntry in $Document.TOC) {
-                if ($level -eq $tocEntry.Level) {
-                    [ref] $null = $tocBuilder.AppendFormat('"{0}",', $tocEntry.Name).AppendLine()
-                }
-                else {
-                    $level = $tocEntry.Level
-                    if ($tocEntry.Level -ne 0) {
-                        [ref] $null = $tocBuilder.AppendLine(']')
+                switch ($tocEntry.Level) {
+                    { $_ -eq $level } {
+                        [ref] $null = $tocBuilder.AppendFormat('"{0}",', $tocEntry.Name).AppendLine()
+                        break
                     }
-                    [ref] $null = $tocBuilder.Append('{')
-                    [ref] $null = $tocBuilder.AppendFormat('"{0}": [', $tocEntry.Name).AppendLine()
+                    { $_ -gt $level } {
+                        [ref] $null = $tocBuilder.Append('{')
+                        [ref] $null = $tocBuilder.AppendFormat('"{0}": [', $tocEntry.Name).AppendLine()
+                        break
+                    }
+                    { $_ -lt $level } {
+                        [ref] $null = $tocBuilder.AppendLine(']')
+                        [ref] $null = $tocBuilder.AppendLine('},')
+                        [ref] $null = $tocBuilder.AppendFormat('"{0}",', $tocEntry.Name).AppendLine()
+                        break
+                    }
                 }
+                $level = $tocEntry.Level   
             }
-            [ref] $null = $tocBuilder.AppendLine(']')
+
+            ## Mopping up unclosed brackets
+            while ($level -ne 0) {
+                [ref] $null = $tocBuilder.AppendLine(']')
+                [ref] $null = $tocBuilder.AppendLine('}')
+                $level--
+            }
         }
 
         [ref] $null = $tocBuilder.AppendLine('],')
