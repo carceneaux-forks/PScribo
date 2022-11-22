@@ -81,8 +81,8 @@ function Out-JsonTable
         # $justifiedTableText = ConvertTo-JustifiedString @convertToJustifiedStringParams
         
         [ref] $null = $tableBuilder.AppendLine('{')
-        [ref] $null = $tableBuilder.AppendLine($tableJson)
-        [ref] $null = $tableBuilder.Append(',')
+        [ref] $null = $tableBuilder.Append($tableJson)
+        [ref] $null = $tableBuilder.AppendLine(',')
 
         if ($Table.HasCaption)
         {
