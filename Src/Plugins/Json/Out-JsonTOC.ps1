@@ -36,10 +36,10 @@ function Out-JsonTOC {
                     [ref] $null = $list
                 }
                 [ref] $null = $tocBuilder[$tocEntry.Level].Add($tocEntry.Name)
-                $tocEntry.Name
+                Write-Host $tocEntry.Name
             }
         }
-        $tocBuilder
+        Write-Host $tocBuilder
         return ($tocBuilder | ConvertTo-Json)
     }
 }
