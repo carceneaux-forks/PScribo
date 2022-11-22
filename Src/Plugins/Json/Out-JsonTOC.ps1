@@ -42,7 +42,8 @@ function Out-JsonTOC {
                     if ($tocEntry.Level -ne 0) {
                         [ref] $null = $tocBuilder.AppendLine(']')
                     }
-                    [ref] $null = $tocBuilder.AppendFormat('{"{0}": [', $tocEntry.Name).AppendLine()
+                    [ref] $null = $tocBuilder.Append('{')
+                    [ref] $null = $tocBuilder.AppendFormat('"{0}": [', $tocEntry.Name).AppendLine()
                 }
             }
             [ref] $null = $tocBuilder.AppendLine(']')
