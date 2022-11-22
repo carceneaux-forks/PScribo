@@ -21,7 +21,6 @@ function Out-JsonSection
     }
     process
     {
-        $padding = ''.PadRight(($Section.Tabs * 4), ' ')
         $sectionBuilder = New-Object -TypeName System.Text.StringBuilder
         if ($Document.Options['EnableSectionNumbering'])
         {
@@ -31,9 +30,7 @@ function Out-JsonSection
         {
             [string] $sectionName = '{0}' -f $Section.Name
         }
-        [ref] $null = $sectionBuilder.Append($padding)
-        [ref] $null = $sectionBuilder.AppendLine($sectionName.TrimStart())
-        [ref] $null = $sectionBuilder.Append($padding)
+        [ref] $null = $sectionBuilder.AppendFormat('"{0}": [',$sectionName.TrimStart()).AppendLine()
 
         foreach ($subSection in $Section.Sections.GetEnumerator())
         {
@@ -68,6 +65,8 @@ function Out-JsonSection
                 }
             }
         }
+
+        [ref] $null = $sectionBuilder.AppendLine(']')
 
         return $sectionBuilder.ToString()
     }

@@ -51,7 +51,7 @@ function Out-JsonParagraph
         }
 
         # $convertToAlignedStringParams['InputObject'] = $paragraphBuilder.ToString()
-        [ref] $null = $paragraphBuilder.AppendLine(']')
+        [ref] $null = $paragraphBuilder.AppendLine('],')
         return $paragraphBuilder.ToString()
     }
 }
