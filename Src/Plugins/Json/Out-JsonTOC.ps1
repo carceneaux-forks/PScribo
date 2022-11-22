@@ -36,6 +36,7 @@ function Out-JsonTOC {
                     [ref] $null = $list
                 }
                 [ref] $null = $tocBuilder[$tocEntry.Level].Add($tocEntry.Name)
+                $tocEntry.Name
             }
         }
         $tocBuilder
