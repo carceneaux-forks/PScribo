@@ -54,15 +54,6 @@ function Out-JsonHeaderFooter
                             [ref] $null = $hfBuilder.AppendLine()
                         }
                     }
-                    'PScribo.BlankLine'
-                    {
-                        $blankLine = Out-JsonBlankLine -BlankLine $subSection
-                        [ref] $null = $hfBuilder.Append($blankLine)
-                    }
-                    'PScribo.LineBreak'
-                    {
-                        [ref] $null = $hfBuilder.Append((Out-JsonLineBreak))
-                    }
                 }
             }
 
