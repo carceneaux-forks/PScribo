@@ -1,6 +1,5 @@
-function Out-JsonTOC
-{
-<#
+function Out-JsonTOC {
+    <#
     .SYNOPSIS
         Output formatted Table of Contents
 #>
@@ -10,25 +9,20 @@ function Out-JsonTOC
         [Parameter(Mandatory, ValueFromPipeline)]
         [System.Management.Automation.PSObject] $TOC
     )
-    begin
-    {
+    begin {
         ## Fix Set-StrictMode
-        if (-not (Test-Path -Path Variable:\Options))
-        {
+        if (-not (Test-Path -Path Variable:\Options)) {
             $options = New-PScriboJsonOption
         }
     }
-    process
-    {
+    process {
         $tocBuilder = New-Object -TypeName System.Text.StringBuilder
         [ref] $null = $tocBuilder.AppendFormat('"{0}": [', $TOC.Name).AppendLine()
 
         $level = $null
-        if ($Options.ContainsKey('EnableSectionNumbering'))
-        {
+        if ($Options.ContainsKey('EnableSectionNumbering')) {
             $maxSectionNumberLength = $Document.TOC.Number | ForEach-Object { $_.Length } | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum
-            foreach ($tocEntry in $Document.TOC)
-            {
+            foreach ($tocEntry in $Document.TOC) {
                 [ref] $null = $tocBuilder.Append('{')
                 $sectionNumberPaddingLength = $maxSectionNumberLength - $tocEntry.Number.Length
                 $sectionNumberIndent = ''.PadRight($tocEntry.Level, ' ')
@@ -37,20 +31,15 @@ function Out-JsonTOC
                 [ref] $null = $tocBuilder.AppendLine('},')
             }
         }
-        else
-        {
+        else {
             $maxSectionNumberLength = $Document.TOC.Level | Sort-Object | Select-Object -Last 1
-            foreach ($tocEntry in $Document.TOC)
-            {
-                if ($level -eq $tocEntry.Level)
-                {
+            foreach ($tocEntry in $Document.TOC) {
+                if ($level -eq $tocEntry.Level) {
                     [ref] $null = $tocBuilder.AppendFormat('"{0}",', $tocEntry.Name).AppendLine()
                 }
-                else
-                {
+                else {
                     $level = $tocEntry.Level
-                    if ($tocEntry.Level -ne 0)
-                    {
+                    if ($tocEntry.Level -ne 0) {
                         [ref] $null = $tocBuilder.AppendLine(']')
                     }
                     [ref] $null = $tocBuilder.AppendFormat('{"{0}": [', $tocEntry.Name).AppendLine()
