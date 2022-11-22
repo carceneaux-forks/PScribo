@@ -23,7 +23,7 @@ function Out-JsonParagraph
     process
     {
         $convertToAlignedStringParams = @{
-            Width       = $options.TextWidth
+            Width       = 0
             Tabs        = $Paragraph.Tabs
             Align       = 'Left'
         }

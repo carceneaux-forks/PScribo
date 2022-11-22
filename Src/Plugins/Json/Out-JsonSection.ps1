@@ -35,7 +35,6 @@ function Out-JsonSection
         [ref] $null = $sectionBuilder.Append($padding)
         [ref] $null = $sectionBuilder.AppendLine($sectionName.TrimStart())
         [ref] $null = $sectionBuilder.Append($padding)
-        [ref] $null = $sectionBuilder.AppendLine(''.PadRight(($options.SeparatorWidth - $padding.Length), $options.SectionSeparator))
 
         foreach ($subSection in $Section.Sections.GetEnumerator())
         {

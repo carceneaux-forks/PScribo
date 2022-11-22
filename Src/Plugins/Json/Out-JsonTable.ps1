@@ -23,7 +23,7 @@ function Out-JsonTable
     {
         $tableStyle = Get-PScriboDocumentStyle -TableStyle $Table.Style
         $tableBuilder = New-Object -TypeName System.Text.StringBuilder
-        $tableRenderWidth = $options.TextWidth - ($Table.Tabs * 4)
+        $tableRenderWidth = 0
 
         ## We need to replace page numbers before outputting the table
         foreach ($row in $Table.Rows)

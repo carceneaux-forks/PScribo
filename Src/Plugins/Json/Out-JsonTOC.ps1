@@ -22,7 +22,6 @@ function Out-JsonTOC
     {
         $tocBuilder = New-Object -TypeName System.Text.StringBuilder
         [ref] $null = $tocBuilder.AppendLine($TOC.Name)
-        [ref] $null = $tocBuilder.AppendLine(''.PadRight($options.SeparatorWidth, $options.SectionSeparator))
 
         if ($Options.ContainsKey('EnableSectionNumbering'))
         {

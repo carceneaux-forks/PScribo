@@ -25,7 +25,7 @@ function Get-JsonTableCaption
         $tableStyle = Get-PScriboDocumentStyle -TableStyle $Table.Style
         $convertToAlignedStringParams = @{
             InputObject = '{0} {1} {2}' -f $tableStyle.CaptionPrefix, $Table.CaptionNumber, $Table.Caption
-            Width       = $options.TextWidth
+            Width       = 0
             Tabs        = $Table.Tabs
             Align       = $tableStyle.Align
         }
