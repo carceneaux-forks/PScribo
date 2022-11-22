@@ -38,7 +38,7 @@ function Out-JsonParagraph
         [ref] $null = $paragraphBuilder.AppendLine('[')
         foreach ($paragraphRun in $Paragraph.Sections)
         {
-            [ref] $null = $paragraphBuilder.AppendLine('{"')
+            [ref] $null = $paragraphBuilder.Append('{"')
             $text = Resolve-PScriboToken -InputObject $paragraphRun.Text
             [ref] $null = $paragraphBuilder.Append($text)
 
@@ -47,7 +47,7 @@ function Out-JsonParagraph
             {
                 [ref] $null = $paragraphBuilder.Append(' ')
             }
-            [ref] $null = $paragraphBuilder.Append('"},')
+            [ref] $null = $paragraphBuilder.AppendLine('"},')
         }
 
         # $convertToAlignedStringParams['InputObject'] = $paragraphBuilder.ToString()

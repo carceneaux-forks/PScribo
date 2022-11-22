@@ -29,12 +29,12 @@ function Out-JsonTOC
             $maxSectionNumberLength = $Document.TOC.Number | ForEach-Object { $_.Length } | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum
             foreach ($tocEntry in $Document.TOC)
             {
-                [ref] $null = $tocBuilder.AppendLine('{')
+                [ref] $null = $tocBuilder.Append('{')
                 $sectionNumberPaddingLength = $maxSectionNumberLength - $tocEntry.Number.Length
                 $sectionNumberIndent = ''.PadRight($tocEntry.Level, ' ')
                 $sectionPadding = ''.PadRight($sectionNumberPaddingLength, ' ')
-                [ref] $null = $tocBuilder.AppendFormat('"{0}{1}  {2}{3}"', $tocEntry.Number, $sectionPadding, $sectionNumberIndent, $tocEntry.Name).AppendLine()
-                [ref] $null = $tocBuilder.Append('},')
+                [ref] $null = $tocBuilder.AppendFormat('"{0}{1}  {2}{3}"', $tocEntry.Number, $sectionPadding, $sectionNumberIndent, $tocEntry.Name)
+                [ref] $null = $tocBuilder.AppendLine('},')
             }
         }
         else
@@ -42,10 +42,10 @@ function Out-JsonTOC
             $maxSectionNumberLength = $Document.TOC.Level | Sort-Object | Select-Object -Last 1
             foreach ($tocEntry in $Document.TOC)
             {
-                [ref] $null = $tocBuilder.AppendLine('{')
+                [ref] $null = $tocBuilder.Append('{')
                 $sectionNumberIndent = ''.PadRight($tocEntry.Level, ' ')
-                [ref] $null = $tocBuilder.AppendFormat('"{0}{1}",', $sectionNumberIndent, $tocEntry.Name).AppendLine()
-                [ref] $null = $tocBuilder.AppendLine('}')
+                [ref] $null = $tocBuilder.AppendFormat('"{0}{1}"', $sectionNumberIndent, $tocEntry.Name)
+                [ref] $null = $tocBuilder.AppendLine('},')
             }
         }
 
