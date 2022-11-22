@@ -46,13 +46,13 @@ function Out-JsonTable
             $tableText = (ConvertTo-PSObjectKeyedListTable -Table $Table |
                             Select-Object -Property * -ExcludeProperty '*__Style' |
                             Format-Table -Wrap -AutoSize |
-                                Out-String -Width $tableRenderWidth).Trim([System.Environment]::NewLine)
+                                Out-String).Trim([System.Environment]::NewLine)
         }
         elseif ($Table.IsList)
         {
             $tableText = ($Table.Rows |
                 Select-Object -Property * -ExcludeProperty '*__Style' |
-                    Format-List | Out-String -Width $tableRenderWidth).Trim([System.Environment]::NewLine)
+                    Format-List | Out-String).Trim([System.Environment]::NewLine)
         }
         else
         {
@@ -61,7 +61,7 @@ function Out-JsonTable
             $tableText = ($Table.Rows |
                             Select-Object -Property * -ExcludeProperty '*__Style' |
                                 Format-Table -Wrap -AutoSize |
-                                    Out-String -Width $tableRenderWidth).Trim([System.Environment]::NewLine)
+                                    Out-String).Trim([System.Environment]::NewLine)
         }
 
         if ($Table.HasCaption -and ($tableStyle.CaptionLocation -eq 'Above'))
