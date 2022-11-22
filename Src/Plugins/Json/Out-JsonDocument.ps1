@@ -41,7 +41,6 @@ function Out-JsonDocument
         $script:currentPageNumber = 1
 
         [System.Text.StringBuilder] $jsonBuilder = New-Object -Type 'System.Text.StringBuilder'
-        [ref] $null = $jsonBuilder.AppendLine('{')
         $firstPageHeader = Out-JsonHeaderFooter -Header -FirstPage
         [ref] $null = $jsonBuilder.Append($firstPageHeader)
 
@@ -81,13 +80,12 @@ function Out-JsonDocument
 
         $pageFooter =Out-JsonHeaderFooter -Footer
         [ref] $null = $jsonBuilder.Append($pageFooter)
-        [ref] $null = $jsonBuilder.AppendLine('}')
 
         $stopwatch.Stop()
         Write-PScriboMessage -Message ($localized.DocumentProcessingCompleted -f $Document.Name)
         $destinationPath = Join-Path -Path $Path ('{0}.json' -f $Document.Name)
         Write-PScriboMessage -Message ($localized.SavingFile -f $destinationPath)
-        Set-Content -Value ($jsonBuilder.ToString()) -Path $destinationPath -Encoding $Options.Encoding
+        $jsonBuilder | ConvertTo-Json | Set-Content -Path $destinationPath -Encoding $Options.Encoding
         [ref] $null = $jsonBuilder
 
         if ($stopwatch.Elapsed.TotalSeconds -gt 90)
