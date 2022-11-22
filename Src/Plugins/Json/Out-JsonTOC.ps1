@@ -16,7 +16,7 @@ function Out-JsonTOC {
         }
     }
     process {
-        [System.Collections.ArrayList] $tocBuilder = @()
+        $tocBuilder = New-Object -TypeName 'System.Collections.ArrayList'
 
         if ($Options.ContainsKey('EnableSectionNumbering')) {
             $maxSectionNumberLength = $Document.TOC.Number | ForEach-Object { $_.Length } | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum
@@ -29,8 +29,11 @@ function Out-JsonTOC {
         }
         else {
             foreach ($tocEntry in $Document.TOC) {
-                if ($null -eq $tocBuilder[$tocEntry.Level]) {
-                    [ref] $null = $tocBuilder.Add(@())
+                if ($tocEntry.Level -gt ($tocBuilder.Count-1)) {
+                    $list = New-Object -TypeName 'System.Collections.ArrayList'
+                    [ref] $null = $list.Add($tocEntry.Name)
+                    [ref] $null = $tocBuilder.Add($list)
+                    [ref] $null = $list
                 }
                 [ref] $null = $tocBuilder[$tocEntry.Level].Add($tocEntry.Name)
             }
