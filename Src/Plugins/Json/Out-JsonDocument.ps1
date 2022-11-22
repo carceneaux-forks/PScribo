@@ -41,7 +41,7 @@ function Out-JsonDocument
         $script:currentPageNumber = 1
 
         [System.Text.StringBuilder] $jsonBuilder = New-Object -Type 'System.Text.StringBuilder'
-        [ref] $null = $jsonBuilder.Append('{')
+        [ref] $null = $jsonBuilder.AppendLine('{')
         $firstPageHeader = Out-JsonHeaderFooter -Header -FirstPage
         [ref] $null = $jsonBuilder.Append($firstPageHeader)
 

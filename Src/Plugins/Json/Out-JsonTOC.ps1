@@ -33,9 +33,8 @@ function Out-JsonTOC
                 $sectionNumberPaddingLength = $maxSectionNumberLength - $tocEntry.Number.Length
                 $sectionNumberIndent = ''.PadRight($tocEntry.Level, ' ')
                 $sectionPadding = ''.PadRight($sectionNumberPaddingLength, ' ')
-                [ref] $null = $tocBuilder.AppendLine()
-                [ref] $null = $tocBuilder.AppendFormat('"{0}{1}  {2}{3}",', $tocEntry.Number, $sectionPadding, $sectionNumberIndent, $tocEntry.Name).AppendLine()
-                [ref] $null = $tocBuilder.AppendLine('}')
+                [ref] $null = $tocBuilder.AppendFormat('"{0}{1}  {2}{3}"', $tocEntry.Number, $sectionPadding, $sectionNumberIndent, $tocEntry.Name).AppendLine()
+                [ref] $null = $tocBuilder.Append('},')
             }
         }
         else
