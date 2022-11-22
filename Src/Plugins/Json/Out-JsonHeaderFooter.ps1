@@ -25,6 +25,7 @@ function Out-JsonHeaderFooter
         if ($null -ne $headerFooter)
         {
             [System.Text.StringBuilder] $hfBuilder = New-Object System.Text.StringBuilder
+            [ref] $null = $hfBuilder.AppendLine('[')
 
             foreach ($subSection in $headerFooter.Sections.GetEnumerator())
             {
@@ -39,24 +40,13 @@ function Out-JsonHeaderFooter
                     }
                     'PScribo.Table'
                     {
-                        if ($Footer)
-                        {
-                            ## Add a space before a footer table
-                            [ref] $null = $hfBuilder.AppendLine()
-                        }
-
                         $table = Out-JsonTable -Table $cloneSubSection
                         [ref] $null = $hfBuilder.Append($table)
-
-                        if ($Header)
-                        {
-                            ## Add a space after a header table
-                            [ref] $null = $hfBuilder.AppendLine()
-                        }
                     }
                 }
             }
 
+            [ref] $null = $hfBuilder.AppendLine(']')
             return $hfBuilder.ToString()
         }
     }

@@ -21,17 +21,21 @@ function Out-JsonTOC
     process
     {
         $tocBuilder = New-Object -TypeName System.Text.StringBuilder
-        [ref] $null = $tocBuilder.AppendLine($TOC.Name)
+        [ref] $null = $tocBuilder.AppendLine('{')
+        [ref] $null = $tocBuilder.AppendFormat('"{0}": [{1}', $TOC.Name)
 
         if ($Options.ContainsKey('EnableSectionNumbering'))
         {
             $maxSectionNumberLength = $Document.TOC.Number | ForEach-Object { $_.Length } | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum
             foreach ($tocEntry in $Document.TOC)
             {
+                [ref] $null = $tocBuilder.AppendLine('{')
                 $sectionNumberPaddingLength = $maxSectionNumberLength - $tocEntry.Number.Length
                 $sectionNumberIndent = ''.PadRight($tocEntry.Level, ' ')
                 $sectionPadding = ''.PadRight($sectionNumberPaddingLength, ' ')
-                [ref] $null = $tocBuilder.AppendFormat('{0}{1}  {2}{3}', $tocEntry.Number, $sectionPadding, $sectionNumberIndent, $tocEntry.Name).AppendLine()
+                [ref] $null = $tocBuilder.AppendLine()
+                [ref] $null = $tocBuilder.AppendFormat('"{0}{1}  {2}{3}",', $tocEntry.Number, $sectionPadding, $sectionNumberIndent, $tocEntry.Name).AppendLine()
+                [ref] $null = $tocBuilder.AppendLine('}')
             }
         }
         else
@@ -39,10 +43,15 @@ function Out-JsonTOC
             $maxSectionNumberLength = $Document.TOC.Level | Sort-Object | Select-Object -Last 1
             foreach ($tocEntry in $Document.TOC)
             {
+                [ref] $null = $tocBuilder.AppendLine('{')
                 $sectionNumberIndent = ''.PadRight($tocEntry.Level, ' ')
-                [ref] $null = $tocBuilder.AppendFormat('{0}{1}', $sectionNumberIndent, $tocEntry.Name).AppendLine()
+                [ref] $null = $tocBuilder.AppendFormat('"{0}{1}",', $sectionNumberIndent, $tocEntry.Name).AppendLine()
+                [ref] $null = $tocBuilder.AppendLine('}')
             }
         }
+
+        [ref] $null = $tocBuilder.AppendLine(']')
+        [ref] $null = $tocBuilder.AppendLine('}')
 
         return $tocBuilder.ToString()
     }

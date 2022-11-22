@@ -38,8 +38,7 @@ function Out-JsonTable
             }
         }
 
-        ## We've got to render the table first to determine how wide it is
-        ## before we can justify it
+        ## Rendering the table
         if ($Table.IsKeyedList)
         {
             ## Create new objects with headings as properties
@@ -64,36 +63,39 @@ function Out-JsonTable
                                     Out-String).Trim([System.Environment]::NewLine)
         }
 
-        if ($Table.HasCaption -and ($tableStyle.CaptionLocation -eq 'Above'))
-        {
-            $justifiedCaption = Get-JsonTableCaption -Table $Table
-            [ref] $null = $tableBuilder.AppendLine($justifiedCaption)
-            [ref] $null = $tableBuilder.AppendLine()
-        }
+        $tableJson = $tableText | ConvertTo-Json -Depth 10
+
+        # if ($Table.HasCaption -and ($tableStyle.CaptionLocation -eq 'Above'))
+        # {
+        #     $justifiedCaption = Get-JsonTableCaption -Table $Table
+        #     [ref] $null = $tableBuilder.AppendLine($justifiedCaption)
+        #     [ref] $null = $tableBuilder.AppendLine()
+        # }
 
         ## We don't want to wrap table contents so just justify it
-        $convertToJustifiedStringParams = @{
-            InputObject = $tableText
-            Width = $tableRenderWidth
-            Align = $tableStyle.Align
-        }
-        $justifiedTableText = ConvertTo-JustifiedString @convertToJustifiedStringParams
+        # $convertToJustifiedStringParams = @{
+        #     InputObject = $tableText
+        #     Width = $tableRenderWidth
+        #     Align = $tableStyle.Align
+        # }
+        # $justifiedTableText = ConvertTo-JustifiedString @convertToJustifiedStringParams
+        
+        [ref] $null = $tableBuilder.AppendLine('{')
+        [ref] $null = $tableBuilder.AppendLine($tableJson)
+        [ref] $null = $tableBuilder.Append(',')
 
-        [ref] $null = $tableBuilder.Append($justifiedTableText)
-
-        if ($Table.HasCaption -and ($tableStyle.CaptionLocation -eq 'Below'))
+        if ($Table.HasCaption)
         {
-            $justifiedCaption = Get-JsonTableCaption -Table $Table
-            [ref] $null = $tableBuilder.AppendLine()
-            [ref] $null = $tableBuilder.AppendLine()
-            [ref] $null = $tableBuilder.Append($justifiedCaption)
+            # $justifiedCaption = Get-JsonTableCaption -Table $Table
+            [ref] $null = $tableBuilder.AppendFormat('"caption": "{0}"', $Table.Caption).AppendLine()
         }
 
-        $convertToIndentedStringParams = @{
-            InputObject = $tableBuilder.ToString()
-            Tabs        = $Table.Tabs
-        }
+        [ref] $null = $tableBuilder.AppendLine('}')
+        # $convertToIndentedStringParams = @{
+        #     InputObject = $tableBuilder.ToString()
+        #     Tabs        = $Table.Tabs
+        # }
 
-        return (ConvertTo-IndentedString @convertToIndentedStringParams)
+        return $tableBuilder.ToString()
     }
 }

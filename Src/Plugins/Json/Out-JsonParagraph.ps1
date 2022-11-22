@@ -22,21 +22,23 @@ function Out-JsonParagraph
     }
     process
     {
-        $convertToAlignedStringParams = @{
-            Width       = 0
-            Tabs        = $Paragraph.Tabs
-            Align       = 'Left'
-        }
+        # $convertToAlignedStringParams = @{
+        #     Width       = 0
+        #     Tabs        = $Paragraph.Tabs
+        #     Align       = 'Left'
+        # }
 
-        if (-not [System.String]::IsNullOrEmpty($Paragraph.Style))
-        {
-            $paragraphStyle = Get-PScriboDocumentStyle -Style $Paragraph.Style
-            $convertToAlignedStringParams['Align'] = $paragraphStyle.Align
-        }
+        # if (-not [System.String]::IsNullOrEmpty($Paragraph.Style))
+        # {
+        #     $paragraphStyle = Get-PScriboDocumentStyle -Style $Paragraph.Style
+        #     $convertToAlignedStringParams['Align'] = $paragraphStyle.Align
+        # }
 
         [System.Text.StringBuilder] $paragraphBuilder = New-Object -TypeName 'System.Text.StringBuilder'
+        [ref] $null = $paragraphBuilder.AppendLine('[')
         foreach ($paragraphRun in $Paragraph.Sections)
         {
+            [ref] $null = $paragraphBuilder.AppendLine('{"')
             $text = Resolve-PScriboToken -InputObject $paragraphRun.Text
             [ref] $null = $paragraphBuilder.Append($text)
 
@@ -45,9 +47,11 @@ function Out-JsonParagraph
             {
                 [ref] $null = $paragraphBuilder.Append(' ')
             }
+            [ref] $null = $paragraphBuilder.Append('"},')
         }
 
-        $convertToAlignedStringParams['InputObject'] = $paragraphBuilder.ToString()
-        return (ConvertTo-AlignedString @convertToAlignedStringParams)
+        # $convertToAlignedStringParams['InputObject'] = $paragraphBuilder.ToString()
+        [ref] $null = $paragraphBuilder.AppendLine(']')
+        return $paragraphBuilder.ToString()
     }
 }

@@ -31,7 +31,6 @@ function Out-JsonSection
         {
             [string] $sectionName = '{0}' -f $Section.Name
         }
-        [ref] $null = $sectionBuilder.AppendLine()
         [ref] $null = $sectionBuilder.Append($padding)
         [ref] $null = $sectionBuilder.AppendLine($sectionName.TrimStart())
         [ref] $null = $sectionBuilder.Append($padding)
