@@ -32,13 +32,13 @@ function Out-JsonTOC {
             foreach ($tocEntry in $Document.TOC) {
                 Write-Host $tocEntry.TOC.Number
                 Write-Host $tocEntry.Level
-                if ($tocEntry.Level -gt ($tocBuilder.Count-1)) {
-                    $tocBuilder[$tocEntry.Name] = @{}
-                    [ref] $null = $list.Add($tocEntry.Name)
-                    [ref] $null = $tocBuilder.Add($list)
-                    [ref] $null = $list
-                }
-                [ref] $null = $tocBuilder[$tocEntry.Level].Add($tocEntry.Name)
+                # if ($tocEntry.Level -gt ($tocBuilder.Count-1)) {
+                #     $tocBuilder[$tocEntry.Name] = @{}
+                #     [ref] $null = $list.Add($tocEntry.Name)
+                #     [ref] $null = $tocBuilder.Add($list)
+                #     [ref] $null = $list
+                # }
+                # [ref] $null = $tocBuilder[$tocEntry.Level].Add($tocEntry.Name)
             }
         }
         Write-Host ($tocBuilder | ConvertTo-Json)
