@@ -32,6 +32,7 @@ function Out-JsonTOC {
             foreach ($tocEntry in $Document.TOC) {
                 Write-Host "BEGIN"
                 $level = "$($tocEntry.Number).$($tocEntry.Level)"
+                Write-Host $level
                 Write-Host "END"
                 # if ($tocEntry.Level -gt ($tocBuilder.Count-1)) {
                 #     $tocBuilder[$tocEntry.Name] = @{}
