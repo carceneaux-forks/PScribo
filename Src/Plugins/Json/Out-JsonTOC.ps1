@@ -28,9 +28,11 @@ function Out-JsonTOC {
             }
         }
         else {
+            Write-Host $($Document.TOC.Number | ForEach-Object { $_.Length } | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum)
             foreach ($tocEntry in $Document.TOC) {
+                $level = $tocEntry.Level
                 if ($tocEntry.Level -gt ($tocBuilder.Count-1)) {
-                    $list = New-Object -TypeName 'System.Collections.ArrayList'
+                    $tocBuilder[$tocEntry.Name] = @{}
                     [ref] $null = $list.Add($tocEntry.Name)
                     [ref] $null = $tocBuilder.Add($list)
                     [ref] $null = $list
