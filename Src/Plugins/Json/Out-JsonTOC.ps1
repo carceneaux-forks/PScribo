@@ -31,7 +31,7 @@ function Out-JsonTOC {
             Write-Host $($Document.TOC.Number | ForEach-Object { $_.Length } | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum)
             foreach ($tocEntry in $Document.TOC) {
                 Write-Host "BEGIN"
-                $level = "$($tocEntry.Number).$($tocEntry.Level)"
+                [Version]$level = "$($tocEntry.Number).$($tocEntry.Level)"
                 Write-Host $level
                 Write-Host "END"
                 # if ($tocEntry.Level -gt ($tocBuilder.Count-1)) {
