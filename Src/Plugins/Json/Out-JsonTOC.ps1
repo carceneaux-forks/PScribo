@@ -18,16 +18,11 @@ function Out-JsonTOC {
     process {
         $tocBuilder = New-Object -TypeName 'System.Collections.ArrayList'
 
-        if ($Options.ContainsKey('EnableSectionNumbering')) {            
-            foreach ($tocEntry in $Document.TOC) {
-                [ref] $null = $tocBuilder.Add(@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
-            }
+        foreach ($tocEntry in $Document.TOC) {
+            $tocBuilder[$tocBuilder.Length-1]
+            [ref] $null = $tocBuilder.Add(@{"Name"=$tocEntry.Name})
         }
-        else {
-            foreach ($tocEntry in $Document.TOC) {
-                [ref] $null = $tocBuilder.Add(@{"Name"=$tocEntry.Name})
-            }
-        }
+
         Write-Host ($tocBuilder | ConvertTo-Json)
         return ($tocBuilder)
     }
