@@ -83,11 +83,12 @@ function Out-JsonTOC {
                     }
                     1 {
                         if ($level -ne 1) {
+                            $key = $tocBuilder[-1]
                             if ($tocBuilder[-1].GetType() -eq [string]) {
-                                $tocBuilder[-1] = @{$tocBuilder[-1] = [System.Collections.ArrayList]::new()}
-                                $tocBuilder[-1][0].Add($tocEntry.Name)
+                                $tocBuilder[-1] = @{$key = [System.Collections.ArrayList]::new()}
+                                $tocBuilder[-1].[string]$key.Add($tocEntry.Name)
                             }
-                            $tocBuilder[-1][0].Add($tocEntry.Name)
+                            $tocBuilder[-1].[string]$key.Add($tocEntry.Name)
                             break
                         }                        
                         [ref] $null = $tocBuilder[-1].Add($tocEntry.Name)
@@ -95,11 +96,12 @@ function Out-JsonTOC {
                     }
                     1 {
                         if ($level -ne 2) {
+                            $key = $tocBuilder[-1][-1]
                             if ($tocBuilder[-1][-1].GetType() -eq [string]) {
-                                $tocBuilder[-1][-1] = @{$tocBuilder[-1][-1] = [System.Collections.ArrayList]::new()}
-                                $tocBuilder[-1][-1][0].Add($tocEntry.Name)
+                                $tocBuilder[-1][-1] = @{$key = [System.Collections.ArrayList]::new()}
+                                $tocBuilder[-1][-1].[string]$key.Add($tocEntry.Name)
                             }
-                            $tocBuilder[-1][-1][0].Add($tocEntry.Name)
+                            $tocBuilder[-1][-1].[string]$key.Add($tocEntry.Name)
                             break
                         }                        
                         [ref] $null = $tocBuilder[-1][-1].Add($tocEntry.Name)
