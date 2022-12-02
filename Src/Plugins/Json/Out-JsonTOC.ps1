@@ -11,9 +11,9 @@ function Out-JsonTOC {
     )
     begin {
         ## Fix Set-StrictMode
-        if (-not (Test-Path -Path Variable:\Options)) {
-            $options = New-PScriboJsonOption
-        }
+        # if (-not (Test-Path -Path Variable:\Options)) {
+        #     $options = New-PScriboJsonOption
+        # }
     }
     process {
         $tocBuilder = [ordered]@{}
@@ -24,7 +24,6 @@ function Out-JsonTOC {
             [ref] $null = $tocBuilder.Add($tocEntry.Number, $tocEntry.Name)
         }
     
-        Write-Host ($tocBuilder | ConvertTo-Json -Depth 100)
         return ($tocBuilder)
     }
 }
