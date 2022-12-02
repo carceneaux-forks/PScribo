@@ -82,24 +82,28 @@ function Out-JsonTOC {
                         break
                     }
                     1 {
-                        $key = $tocBuilder[-1].Keys[-1]
                         if ($level -ne 1) {
                             if ($tocBuilder[-1].GetType() -eq [string]) {
                                 $key = $tocBuilder[-1]
                                 $tocBuilder[-1] = @{$key = [System.Collections.ArrayList]::new() }
                             }
                         }
+                        else {
+                            $key = $tocBuilder[-1].Keys[-1]
+                        }
                         [ref] $null = $tocBuilder[-1][$key].Add($tocEntry.Name)
                         break
                     }
                     2 {
-                        $key = $tocBuilder[-1][-1].Keys[-1]
                         if ($level -ne 2) {
                             if ($tocBuilder[-1][-1].GetType() -eq [string]) {
                                 $key = $tocBuilder[-1][-1]
                                 $tocBuilder[-1][-1] = @{$key = [System.Collections.ArrayList]::new() }
                             }
-                        }                        
+                        }
+                        else {
+                            $key = $tocBuilder[-1][-1].Keys[-1]
+                        }
                         [ref] $null = $tocBuilder[-1][-1][$key].Add($tocEntry.Name)
                         break
                     }
