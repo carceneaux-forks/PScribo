@@ -24,7 +24,8 @@ function Out-JsonSection
             {
                 'PScribo.Section'
                 {
-                    $sectionBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))
+                    [string]$sectionName = '{0} {1}' -f $subSection.Number, $subSection.Name
+                    $sectionBuilder.Add($sectionName, (Out-JsonSection -Section $subSection))
                 }
                 # 'PScribo.Paragraph'
                 # {
