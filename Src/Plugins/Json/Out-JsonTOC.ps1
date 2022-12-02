@@ -89,7 +89,8 @@ function Out-JsonTOC {
                             if ($tocBuilder[-1].GetType() -eq [string]) {
                                 Write-Host "String found!"
                                 $key = $tocBuilder[-1]
-                                $tocBuilder[-1] = @{$key = [System.Collections.ArrayList]::new()}
+                                $tocBuilder[-1] = @{$key = [array]$tocEntry.Name}
+                                break
                             }
                         }
                         else {
@@ -97,8 +98,8 @@ function Out-JsonTOC {
                         }
                         Write-Host "Key: $key"
                         Write-Host "Value: $($tocBuilder[-1][$key])"
-                        Write-Host "Type: $($tocBuilder[-1][[System.Collections.ArrayList]$key].GetType())"
-                        [ref] $null = $tocBuilder[-1][[System.Collections.ArrayList]$key].Add($tocEntry.Name)
+                        Write-Host "Type: $($tocBuilder[-1][$key].GetType())"
+                        [ref] $null = $tocBuilder[-1][$key] += $tocEntry.Name
                         break
                     }
                     default {}
