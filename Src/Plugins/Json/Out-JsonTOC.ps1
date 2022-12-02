@@ -69,7 +69,7 @@ function Out-JsonTOC {
             }
         }
     
-        Write-Host ($tocBuilder | ConvertTo-Json)
+        Write-Host ($tocBuilder | ConvertTo-Json -Depth 100)
         return ($tocBuilder)
     }
 }
