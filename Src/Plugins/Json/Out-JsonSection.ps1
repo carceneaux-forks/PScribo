@@ -18,7 +18,7 @@ function Out-JsonSection
     }
     process
     {
-        $sectionBuilder.Add("Name", $sectionBuilder.Name)
+        $sectionBuilder.Add("Name", $Section.Name)
         
         foreach ($subSection in $Section.Sections.GetEnumerator())
         {
