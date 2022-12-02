@@ -46,20 +46,13 @@ function Out-JsonDocument
         ## Generating header
         [ref] $null = $jsonBuilder.Add("header", (Out-JsonHeaderFooter -Header -FirstPage))
 
-        foreach ($subSection in $Document.Sections.GetEnumerator())
+        $section = foreach ($subSection in $Document.Sections.GetEnumerator())
         {
-            $currentIndentationLevel = 1
-            if ($null -ne $subSection.PSObject.Properties['Level'])
-            {
-                $currentIndentationLevel = $subSection.Level +1
-            }
-            Write-PScriboProcessSectionId -SectionId $subSection.Id -SectionType $subSection.Type -Indent $currentIndentationLevel
-
             switch ($subSection.Type)
             {
                 'PScribo.Section'
                 {
-                    $jsonBuilder.Add("section", (Out-JsonSection -Section $subSection))
+                    $jsonBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))
                 }
                 # 'PScribo.Paragraph'
                 # {
