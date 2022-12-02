@@ -43,6 +43,9 @@ function Out-JsonDocument
         ## Initializing JSON object
         $jsonBuilder = [ordered]@{}
 
+        ## Initializing paragraph counter
+        [int]$paragraph = 1
+
         ## Generating header
         [ref] $null = $jsonBuilder.Add("header", (Out-JsonHeaderFooter -Header -FirstPage))
 
@@ -52,12 +55,13 @@ function Out-JsonDocument
             {
                 'PScribo.Section'
                 {
-                    $jsonBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))
+                    [ref] $null = $jsonBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))
                 }
-                # 'PScribo.Paragraph'
-                # {
-                #     $jsonBuilder.Add("paragraph", (Out-JsonParagraph -Paragraph $subSection))
-                # }
+                'PScribo.Paragraph'
+                {
+                    [ref] $null = $jsonBuilder.Add("Paragraph$($paragraph)", (Out-JsonParagraph -Paragraph $subSection))
+                    $paragraph++
+                }
                 # 'PScribo.Table'
                 # {
                 #      $jsonBuilder.Add("table", (Out-JsonTable -Table $subSection))
