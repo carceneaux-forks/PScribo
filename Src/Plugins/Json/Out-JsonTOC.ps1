@@ -102,10 +102,10 @@ function Out-JsonTOC {
                     }
                     default {}
                 }
+                Write-Host "Post-Type: $($tocBuilder[-1][$key].GetType())"
                 $level = $tocEntry.Level
             }
         }
-        Write-Host "Post-Type: $($tocBuilder[-1][$key].GetType())"
         Write-Host ($tocBuilder | ConvertTo-Json)
         return ($tocBuilder)
     }
