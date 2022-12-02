@@ -19,8 +19,6 @@ function Out-JsonTable
     process
     {
         ## We need to replace page numbers before outputting the table
-        Write-Host "Table.Rows:"
-        Write-Host $Table.Rows | ConvertTo-Json -Depth 100
         foreach ($row in $Table.Rows)
         {
             foreach ($property in $row.PSObject.Properties)
@@ -37,25 +35,31 @@ function Out-JsonTable
         if ($Table.IsKeyedList)
         {
             ## Create new objects with headings as properties
+            # $tableText = (ConvertTo-PSObjectKeyedListTable -Table $Table |
+            #                 Select-Object -Property * -ExcludeProperty '*__Style' |
+            #                 Format-Table -Wrap -AutoSize |
+            #                     Out-String).Trim([System.Environment]::NewLine)
             $tableText = (ConvertTo-PSObjectKeyedListTable -Table $Table |
-                            Select-Object -Property * -ExcludeProperty '*__Style' |
-                            Format-Table -Wrap -AutoSize |
-                                Out-String).Trim([System.Environment]::NewLine)
+                            Select-Object -Property * -ExcludeProperty '*__Style')
         }
         elseif ($Table.IsList)
         {
+            # $tableText = ($Table.Rows |
+            #     Select-Object -Property * -ExcludeProperty '*__Style' |
+            #         Format-List | Out-String).Trim([System.Environment]::NewLine)
             $tableText = ($Table.Rows |
-                Select-Object -Property * -ExcludeProperty '*__Style' |
-                    Format-List | Out-String).Trim([System.Environment]::NewLine)
+                Select-Object -Property * -ExcludeProperty '*__Style')
         }
         else
         {
             ## Don't trim tabs for table headers
             ## Tables set to AutoSize as otherwise rendering is different between PoSh v4 and v5
+            # $tableText = ($Table.Rows |
+            #                 Select-Object -Property * -ExcludeProperty '*__Style' |
+            #                     Format-Table -Wrap -AutoSize |
+            #                         Out-String).Trim([System.Environment]::NewLine)
             $tableText = ($Table.Rows |
-                            Select-Object -Property * -ExcludeProperty '*__Style' |
-                                Format-Table -Wrap -AutoSize |
-                                    Out-String).Trim([System.Environment]::NewLine)
+                            Select-Object -Property * -ExcludeProperty '*__Style')
         }
 
         Write-Host "tableText type: $($tableText.GetType())"
