@@ -15,6 +15,9 @@ function Out-JsonSection
     {
         ## Initializing section object
         $sectionBuilder = [ordered]@{}
+
+        ## Initializing paragraph counter
+        [int]$paragraph = 1
     }
     process
     {
@@ -30,7 +33,7 @@ function Out-JsonSection
                 }
                 'PScribo.Paragraph'
                 {
-                    [ref] $null = $sectionBuilder.Add("Paragraph", (Out-JsonParagraph -Paragraph $subSection))
+                    [ref] $null = $sectionBuilder.Add("Paragraph$($paragraph++)", (Out-JsonParagraph -Paragraph $subSection))
                 }
                 # 'PScribo.Table'
                 # {
