@@ -57,18 +57,18 @@ function Out-JsonDocument
 
             switch ($subSection.Type)
             {
-                # 'PScribo.Section'
-                # {
-                #     $jsonBuilder.Add("section", (Out-JsonSection -Section $subSection))
-                # }
+                'PScribo.Section'
+                {
+                    $jsonBuilder.Add("section", (Out-JsonSection -Section $subSection))
+                }
                 # 'PScribo.Paragraph'
                 # {
                 #     $jsonBuilder.Add("paragraph", (Out-JsonParagraph -Paragraph $subSection))
                 # }
-                'PScribo.Table'
-                {
-                     $jsonBuilder.Add("table", (Out-JsonTable -Table $subSection))
-                }
+                # 'PScribo.Table'
+                # {
+                #      $jsonBuilder.Add("table", (Out-JsonTable -Table $subSection))
+                # }
                 'PScribo.TOC'
                 {
                      $jsonBuilder.Add("toc", (Out-JsonTOC -TOC $subSection))
