@@ -10,14 +10,10 @@ function Out-JsonTOC {
         [System.Management.Automation.PSObject] $TOC
     )
     begin {
-        ## Fix Set-StrictMode
-        # if (-not (Test-Path -Path Variable:\Options)) {
-        #     $options = New-PScriboJsonOption
-        # }
+        ## Initializing TOC object
+        $tocBuilder = [ordered]@{}
     }
     process {
-        $tocBuilder = [ordered]@{}
-
         ## Populating TOC
         ## Disregarding section numbering as its highly beneficial when parsing JSON after the fact
         foreach ($tocEntry in $Document.TOC) {
