@@ -18,14 +18,15 @@ function Out-JsonSection
     }
     process
     {
+        $sectionBuilder.Add("Name", $sectionBuilder.Name)
+        
         foreach ($subSection in $Section.Sections.GetEnumerator())
         {
             switch ($subSection.Type)
             {
                 'PScribo.Section'
                 {
-                    [string]$sectionName = '{0} {1}' -f $subSection.Number, $subSection.Name
-                    $sectionBuilder.Add($sectionName, (Out-JsonSection -Section $subSection))
+                    $sectionBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))
                 }
                 # 'PScribo.Paragraph'
                 # {
