@@ -16,14 +16,14 @@ function Out-JsonTOC {
         }
     }
     process {
-        $tocBuilder = [System.Collections.ArrayList]::new()
+        $tocBuilder = [ordered]@{}
 
         ## Populating TOC
         ## Disregarding section numbering as it'd be highly beneficial when parsing JSON
         foreach ($tocEntry in $Document.TOC) {
             switch ($tocEntry.Level) {
                 0 {
-                    [ref] $null = $tocBuilder.Add([ordered]@{$tocEntry.Number, [ordered]@{"Name" = $tocEntry.Name})
+                    [ref] $null = $tocBuilder.Add($tocEntry.Number, [ordered]@{"Name" = $tocEntry.Name})
                     break
                 }
                 1 {
