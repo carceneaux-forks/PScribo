@@ -90,7 +90,6 @@ function Out-JsonTOC {
                                 Write-Host "String found!"
                                 $key = $tocBuilder[-1]
                                 $tocBuilder[-1] = [ordered]@{$key = [System.Collections.ArrayList]::new()}
-                                break
                             }
                         }
                         else {
