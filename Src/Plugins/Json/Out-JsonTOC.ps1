@@ -26,7 +26,7 @@ function Out-JsonTOC {
         # if ($Options.ContainsKey('EnableSectionNumbering')) {
             foreach ($tocEntry in $Document.TOC) {
                 switch ($tocEntry.Level) {
-                    0 {$
+                    0 {
                         [ref] $null = $tocBuilder.Add(@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
                         break
                     }
