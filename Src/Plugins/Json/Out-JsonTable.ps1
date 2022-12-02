@@ -18,21 +18,20 @@ function Out-JsonTable
     }
     process
     {
+        ## We need to replace page numbers before outputting the table
+        foreach ($row in $Table.Rows)
+        {
+            foreach ($property in $row.PSObject.Properties)
+            {
+                if ($property.Value -is [System.Array])
+                {
+                    $property.Value = [System.String]::Join(' ', $property.Value)
+                }
+                $property.Value = Resolve-PScriboToken -InputObject $property.Value
+            }
+        }
         Write-Host $Table
         Write-Host $Table | ConvertTo-Json -Depth 100
-        # ## We need to replace page numbers before outputting the table
-        # foreach ($row in $Table.Rows)
-        # {
-        #     foreach ($property in $row.PSObject.Properties)
-        #     {
-        #         if ($property.Value -is [System.Array])
-        #         {
-        #             $property.Value = [System.String]::Join(' ', $property.Value)
-        #         }
-        #         $property.Value = Resolve-PScriboToken -InputObject $property.Value
-        #     }
-        # }
-
         # ## Rendering the table
         # if ($Table.IsKeyedList)
         # {
