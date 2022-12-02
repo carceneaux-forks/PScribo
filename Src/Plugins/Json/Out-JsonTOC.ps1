@@ -19,7 +19,7 @@ function Out-JsonTOC {
         $tocBuilder = [ordered]@{}
 
         ## Populating TOC
-        ## Disregarding section numbering as it'd be highly beneficial when parsing JSON
+        ## Disregarding section numbering as its highly beneficial when parsing JSON after the fact
         foreach ($tocEntry in $Document.TOC) {
             [ref] $null = $tocBuilder.Add($tocEntry.Number, $tocEntry.Name)
         }
