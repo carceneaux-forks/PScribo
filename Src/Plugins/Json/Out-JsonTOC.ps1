@@ -31,21 +31,21 @@ function Out-JsonTOC {
                         break
                     }
                     1 {
-                        $level1 = $tocBuilder.Count - 1
-                        [ref] $null = $tocBuilder[$level1].Add($tocEntry.Number,[ordered]@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
+                        # $level1 = $tocBuilder.Count - 1
+                        [ref] $null = $tocBuilder[-1].Add($tocEntry.Number,[ordered]@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
                         break
                     }
                     2 {
-                        $level1 = $tocBuilder.Count - 1
-                        $level2 = $tocBuilder[$level1].Count - 1
-                        [ref] $null = $tocBuilder[$level1][$level2].Add($tocEntry.Number,[ordered]@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
+                        # $level1 = $tocBuilder.Count - 1
+                        # $level2 = $tocBuilder[$level1].Count - 1
+                        [ref] $null = $tocBuilder[-1][-1].Add($tocEntry.Number,[ordered]@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
                         break
                     }
                     3 {
-                        $level1 = $tocBuilder.Count - 1
-                        $level2 = $tocBuilder[$level1].Count - 1
-                        $level3 = $tocBuilder[$level1][$level2].Count - 1
-                        [ref] $null = $tocBuilder[$level1][$level2][$level3].Add($tocEntry.Number,[ordered]@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
+                        # $level1 = $tocBuilder.Count - 1
+                        # $level2 = $tocBuilder[$level1].Count - 1
+                        # $level3 = $tocBuilder[$level1][$level2].Count - 1
+                        [ref] $null = $tocBuilder[-1][-1][-1].Add($tocEntry.Number,[ordered]@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
                         break
                     }
                 }                
