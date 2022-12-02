@@ -18,25 +18,11 @@ function Out-JsonSection
     }
     process
     {
-        # if ($Document.Options['EnableSectionNumbering'])
-        # {
-            [string] $sectionName = '{0} {1}' -f $Section.Number, $Section.Name
-        # }
-        # else
-        # {
-        #     [string] $sectionName = '{0}' -f $Section.Name
-        # }
-        # [ref] $null = $sectionBuilder.AppendFormat('"{0}": [',$sectionName.TrimStart()).AppendLine()
+        ## Disregarding section numbering as its highly beneficial when parsing JSON after the fact
+        [string] $sectionName = '{0} {1}' -f $Section.Number, $Section.Name
 
         $section = foreach ($subSection in $Section.Sections.GetEnumerator())
         {
-            $currentIndentationLevel = 1
-            if ($null -ne $subSection.PSObject.Properties['Level'])
-            {
-                $currentIndentationLevel = $subSection.Level +1
-            }
-            Write-PScriboProcessSectionId -SectionId $subSection.Id -SectionType $subSection.Type -Indent $currentIndentationLevel
-
             switch ($subSection.Type)
             {
                 'PScribo.Section'
