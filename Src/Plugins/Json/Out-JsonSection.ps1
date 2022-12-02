@@ -18,10 +18,7 @@ function Out-JsonSection
     }
     process
     {
-        ## Disregarding section numbering as its highly beneficial when parsing JSON after the fact
-        [string] $sectionName = '{0}' -f $Section.Name
-
-        $section = foreach ($subSection in $Section.Sections.GetEnumerator())
+        $output = foreach ($subSection in $Section.Sections.GetEnumerator())
         {
             switch ($subSection.Type)
             {
@@ -48,8 +45,8 @@ function Out-JsonSection
             }
         }
 
-        [ref] $null = $sectionBuilder.Add($sectionName, $section)
-        [ref] $null = $section
+        [ref] $null = $sectionBuilder.Add($Section.Name, $output)
+        [ref] $null = $output
 
         return $sectionBuilder
     }
