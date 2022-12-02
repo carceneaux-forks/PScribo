@@ -95,6 +95,8 @@ function Out-JsonTOC {
                             $key = $tocBuilder[-1].Keys[-1]
                         }
                         Write-Host "Key: $key"
+                        Write-Host "Value: $($tocBuilder[-1][$key])"
+                        Write-Host "Type: $($tocBuilder[-1][$key].GetType())"
                         [ref] $null = $tocBuilder[-1][$key].Add($tocEntry.Name)
                         break
                     }
