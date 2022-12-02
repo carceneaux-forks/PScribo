@@ -70,7 +70,7 @@ function Out-JsonTOC {
                         [ref] $null = $tocBuilder[-1][-1][-1][-1][-1][-1][-1][-1][-1][-1].Add($tocEntry.Number, [ordered]@{"Section" = $tocEntry.Number; "Name" = $tocEntry.Name })
                         break
                     }
-                }                
+                }
             }
         }
         else {
@@ -85,18 +85,18 @@ function Out-JsonTOC {
                         if ($level -ne 1) {
                             if ($tocBuilder[-1].GetType() -eq [string]) {
                                 $key = $tocBuilder[-1]
-                                $tocBuilder[-1] = @{$key = [System.Collections.ArrayList]::new()}
+                                $tocBuilder[-1] = @{$key = [System.Collections.ArrayList]::new() }
                             }
                         }
                         $key = $tocBuilder[-1].Keys[-1]
                         [ref] $null = $tocBuilder[-1][$key].Add($tocEntry.Name)
                         break
                     }
-                    2 { 
-                        if ($level -ne 2) {       
-                            $key = $tocBuilder[-1][-1]                     
+                    2 {
+                        if ($level -ne 2) {
                             if ($tocBuilder[-1][-1].GetType() -eq [string]) {
-                                $tocBuilder[-1][-1] = @{$key = [System.Collections.ArrayList]::new()}
+                                $key = $tocBuilder[-1][-1]
+                                $tocBuilder[-1][-1] = @{$key = [System.Collections.ArrayList]::new() }
                             }
                         }
                         $key = $tocBuilder[-1][-1].Keys[-1]
