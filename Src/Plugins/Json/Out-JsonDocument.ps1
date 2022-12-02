@@ -40,9 +40,11 @@ function Out-JsonDocument
         $Options = Merge-PScriboPluginOption @mergePScriboPluginOptionParams
         $script:currentPageNumber = 1
 
-        [System.Text.StringBuilder] $jsonBuilder = New-Object -Type 'System.Text.StringBuilder'
-        $firstPageHeader = Out-JsonHeaderFooter -Header -FirstPage
-        [ref] $null = $jsonBuilder.Append($firstPageHeader)
+        ## Initializing JSON object
+        $jsonBuilder = [System.Collections.ArrayList]::new()
+
+        ## Generating header
+        [ref] $null = $jsonBuilder.Add((Out-JsonHeaderFooter -Header -FirstPage))
 
         foreach ($subSection in $Document.Sections.GetEnumerator())
         {
@@ -55,21 +57,21 @@ function Out-JsonDocument
 
             switch ($subSection.Type)
             {
-                'PScribo.Section'
-                {
-                    [ref] $null = $jsonBuilder.Append((Out-JsonSection -Section $subSection))
-                }
-                'PScribo.Paragraph'
-                {
-                    [ref] $null = $jsonBuilder.Append((Out-JsonParagraph -Paragraph $subSection))
-                }
-                'PScribo.Table'
-                {
-                    [ref] $null = $jsonBuilder.Append((Out-JsonTable -Table $subSection))
-                }
+                # 'PScribo.Section'
+                # {
+                #     $jsonBuilder.Add("section", (Out-JsonSection -Section $subSection))
+                # }
+                # 'PScribo.Paragraph'
+                # {
+                #     $jsonBuilder.Add("paragraph", (Out-JsonParagraph -Paragraph $subSection))
+                # }
+                # 'PScribo.Table'
+                # {
+                #      $jsonBuilder.Add("table", (Out-JsonTable -Table $subSection))
+                # }
                 'PScribo.TOC'
                 {
-                    [ref] $null = $jsonBuilder.Append((Out-JsonTOC -TOC $subSection))
+                     $jsonBuilder.Add((Out-JsonTOC -TOC $subSection))
                 }
                 Default
                 {
@@ -78,14 +80,14 @@ function Out-JsonDocument
             }
         }
 
-        $pageFooter =Out-JsonHeaderFooter -Footer
-        [ref] $null = $jsonBuilder.Append($pageFooter)
+        ## Generating footer
+        [ref] $null = $jsonBuilder.Add((Out-JsonHeaderFooter -Footer))
 
         $stopwatch.Stop()
         Write-PScriboMessage -Message ($localized.DocumentProcessingCompleted -f $Document.Name)
         $destinationPath = Join-Path -Path $Path ('{0}.json' -f $Document.Name)
         Write-PScriboMessage -Message ($localized.SavingFile -f $destinationPath)
-        $jsonBuilder | ConvertTo-Json | Set-Content -Path $destinationPath -Encoding $Options.Encoding
+        $jsonBuilder | ConvertTo-Json -Depth 100 | Set-Content -Path $destinationPath -Encoding $Options.Encoding
         [ref] $null = $jsonBuilder
 
         if ($stopwatch.Elapsed.TotalSeconds -gt 90)
