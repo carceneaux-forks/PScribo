@@ -76,6 +76,9 @@ function Out-JsonTOC {
         else {
             $level = $null
             foreach ($tocEntry in $Document.TOC) {
+                Write-Host "Beginning...$($tocEntry.Name)"
+                Write-Host "Current Level: $($tocEntry.Level)"
+                Write-Host "Previous Level: $level"
                 switch ($tocEntry.Level) {
                     0 {
                         [ref] $null = $tocBuilder.Add($tocEntry.Name)
@@ -91,6 +94,7 @@ function Out-JsonTOC {
                         else {
                             $key = $tocBuilder[-1].Keys[-1]
                         }
+                        Write-Host "Key: $key"
                         [ref] $null = $tocBuilder[-1][$key].Add($tocEntry.Name)
                         break
                     }
@@ -104,6 +108,7 @@ function Out-JsonTOC {
                         else {
                             $key = $tocBuilder[-1][-1].Keys[-1]
                         }
+                        Write-Host "Key: $key"
                         [ref] $null = $tocBuilder[-1][-1][$key].Add($tocEntry.Name)
                         break
                     }
