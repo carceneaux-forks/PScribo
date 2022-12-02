@@ -87,6 +87,7 @@ function Out-JsonTOC {
                     1 {
                         if ($level -ne 1) {
                             if ($tocBuilder[-1].GetType() -eq [string]) {
+                                Write-Host "String found!"
                                 $key = $tocBuilder[-1]
                                 $tocBuilder[-1] = @{$key = [System.Collections.ArrayList]::new()}
                             }
