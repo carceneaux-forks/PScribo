@@ -13,19 +13,14 @@ function Out-JsonTable
     )
     begin
     {
-        ## Fix Set-StrictMode
-        if (-not (Test-Path -Path Variable:\Options))
-        {
-            $options = New-PScriboJsonOption
-        }
+        ## Initializing table object
+        $tableBuilder = [ordered]@{}
     }
     process
     {
-        $tableStyle = Get-PScriboDocumentStyle -TableStyle $Table.Style
-        $tableBuilder = New-Object -TypeName System.Text.StringBuilder
-        $tableRenderWidth = 0
-
         ## We need to replace page numbers before outputting the table
+        Write-Host "Table.Rows:"
+        Write-Host $Table.Rows | ConvertTo-Json -Depth 100
         foreach ($row in $Table.Rows)
         {
             foreach ($property in $row.PSObject.Properties)
@@ -63,39 +58,20 @@ function Out-JsonTable
                                     Out-String).Trim([System.Environment]::NewLine)
         }
 
-        $tableJson = $tableText | ConvertTo-Json -Depth 10
-
-        # if ($Table.HasCaption -and ($tableStyle.CaptionLocation -eq 'Above'))
-        # {
-        #     $justifiedCaption = Get-JsonTableCaption -Table $Table
-        #     [ref] $null = $tableBuilder.AppendLine($justifiedCaption)
-        #     [ref] $null = $tableBuilder.AppendLine()
-        # }
-
-        ## We don't want to wrap table contents so just justify it
-        # $convertToJustifiedStringParams = @{
-        #     InputObject = $tableText
-        #     Width = $tableRenderWidth
-        #     Align = $tableStyle.Align
-        # }
-        # $justifiedTableText = ConvertTo-JustifiedString @convertToJustifiedStringParams
+        Write-Host "tableText type: $($tableText.GetType())"
+        Write-Host "tableText unformatted:"
+        Write-Host $tableText
+        Write-Host "tableText json:"
+        Write-Host $tableText | ConvertTo-Json -Depth 100
         
-        [ref] $null = $tableBuilder.AppendLine('{')
-        [ref] $null = $tableBuilder.Append($tableJson)
-        [ref] $null = $tableBuilder.AppendLine(',')
+        # [ref] $null = $tableBuilder.Append($tableJson)
+        [ref] $null = $tableBuilder.Add("Table Name","Table Data")
 
         if ($Table.HasCaption)
         {
-            # $justifiedCaption = Get-JsonTableCaption -Table $Table
-            [ref] $null = $tableBuilder.AppendFormat('"caption": "{0}"', $Table.Caption).AppendLine()
+            # [ref] $null = $tableBuilder.AppendFormat('"caption": "{0}"', $Table.Caption).AppendLine()
         }
 
-        [ref] $null = $tableBuilder.AppendLine('}')
-        # $convertToIndentedStringParams = @{
-        #     InputObject = $tableBuilder.ToString()
-        #     Tabs        = $Table.Tabs
-        # }
-
-        return $tableBuilder.ToString()
+        return $tableBuilder
     }
 }
