@@ -16,14 +16,14 @@ function Out-JsonTOC {
         }
     }
     process {
-        $tocBuilder = New-Object -TypeName 'System.Collections.ArrayList'
+        $tocBuilder = [System.Collections.ArrayList]::new()
 
         # ## Initializing TOC
         # $maxSectionNumberLength = $Document.TOC.Number | ForEach-Object { $_.Length } | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum
         # 1..$maxSectionNumberLength | ForEach-Object { $tocBuilder.Add(@{}) }
 
         ## Populating TOC
-        # if ($Options.ContainsKey('EnableSectionNumbering')) {
+        if ($Options.ContainsKey('EnableSectionNumbering')) {
             foreach ($tocEntry in $Document.TOC) {
                 switch ($tocEntry.Level) {
                     0 {
@@ -31,31 +31,88 @@ function Out-JsonTOC {
                         break
                     }
                     1 {
-                        # $level1 = $tocBuilder.Count - 1
                         [ref] $null = $tocBuilder[-1].Add($tocEntry.Number,[ordered]@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
                         break
                     }
                     2 {
-                        # $level1 = $tocBuilder.Count - 1
-                        # $level2 = $tocBuilder[$level1].Count - 1
                         [ref] $null = $tocBuilder[-1][-1].Add($tocEntry.Number,[ordered]@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
                         break
                     }
                     3 {
-                        # $level1 = $tocBuilder.Count - 1
-                        # $level2 = $tocBuilder[$level1].Count - 1
-                        # $level3 = $tocBuilder[$level1][$level2].Count - 1
                         [ref] $null = $tocBuilder[-1][-1][-1].Add($tocEntry.Number,[ordered]@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
+                        break
+                    }
+                    4 {
+                        [ref] $null = $tocBuilder[-1][-1][-1][-1].Add($tocEntry.Number,[ordered]@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
+                        break
+                    }
+                    5 {
+                        [ref] $null = $tocBuilder[-1][-1][-1][-1][-1].Add($tocEntry.Number,[ordered]@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
+                        break
+                    }
+                    6 {
+                        [ref] $null = $tocBuilder[-1][-1][-1][-1][-1][-1].Add($tocEntry.Number,[ordered]@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
+                        break
+                    }
+                    7 {
+                        [ref] $null = $tocBuilder[-1][-1][-1][-1][-1][-1][-1].Add($tocEntry.Number,[ordered]@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
+                        break
+                    }
+                    8 {
+                        [ref] $null = $tocBuilder[-1][-1][-1][-1][-1][-1][-1][-1].Add($tocEntry.Number,[ordered]@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
+                        break
+                    }
+                    9 {
+                        [ref] $null = $tocBuilder[-1][-1][-1][-1][-1][-1][-1][-1][-1].Add($tocEntry.Number,[ordered]@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
+                        break
+                    }
+                    10 {
+                        [ref] $null = $tocBuilder[-1][-1][-1][-1][-1][-1][-1][-1][-1][-1].Add($tocEntry.Number,[ordered]@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
                         break
                     }
                 }                
             }
-        # }
-        # else {
-        #     foreach ($tocEntry in $Document.TOC) {
-        #         [ref] $null = $tocBuilder.Add(@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
-        #     }
-        # }
+        }
+        else {
+            foreach ($tocEntry in $Document.TOC) {
+                switch ($tocEntry.Level) {
+                    0 {
+                        [ref] $null = $tocBuilder.Add($tocEntry.Name)
+                        break
+                    }
+                    1 {
+                        if ($tocBuilder[-1].GetType() -eq [string]) {
+                            $newList = [System.Collections.ArrayList]::new()
+                            [ref] $null = $newList.Add($tocBuilder[-1])
+                            $tocBuilder[-1] = $newList
+                        break    
+                        }
+                        [ref] $null = $tocBuilder[-1].Add($tocEntry.Name)
+                        break
+                    }
+                    2 {
+                        if ($tocBuilder[-1][-1].GetType() -eq [string]) {
+                            $newList = [System.Collections.ArrayList]::new()
+                            [ref] $null = $newList.Add($tocBuilder[-1][-1])
+                            $tocBuilder[-1][-1] = $newList
+                        break    
+                        }
+                        [ref] $null = $tocBuilder[-1][-1].Add($tocEntry.Name)
+                        break
+                    }
+                    3 {
+                        if ($tocBuilder[-1][-1][-1].GetType() -eq [string]) {
+                            $newList = [System.Collections.ArrayList]::new()
+                            [ref] $null = $newList.Add($tocBuilder[-1][-1][-1])
+                            $tocBuilder[-1][-1][-1] = $newList
+                        break    
+                        }
+                        [ref] $null = $tocBuilder[-1][-1][-1].Add($tocEntry.Name)
+                        break
+                    }
+                }
+            }
+        }
         Write-Host ($tocBuilder | ConvertTo-Json)
         return ($tocBuilder)
     }
