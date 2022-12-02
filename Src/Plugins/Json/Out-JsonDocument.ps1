@@ -46,13 +46,14 @@ function Out-JsonDocument
         ## Generating header
         [ref] $null = $jsonBuilder.Add("header", (Out-JsonHeaderFooter -Header -FirstPage))
 
-        $section = foreach ($subSection in $Document.Sections.GetEnumerator())
+        foreach ($subSection in $Document.Sections.GetEnumerator())
         {
             switch ($subSection.Type)
             {
                 'PScribo.Section'
                 {
-                    $jsonBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))
+                    [string]$sectionName = '{0} {1}' -f $subSection.Number, $subSection.Name
+                    $jsonBuilder.Add($sectionName, (Out-JsonSection -Section $subSection))
                 }
                 # 'PScribo.Paragraph'
                 # {
