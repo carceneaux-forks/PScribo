@@ -18,6 +18,7 @@ function Out-JsonTable
     }
     process
     {
+        $Table
         Write-Host $Table | ConvertTo-Json -Depth 100
         # ## We need to replace page numbers before outputting the table
         # foreach ($row in $Table.Rows)
