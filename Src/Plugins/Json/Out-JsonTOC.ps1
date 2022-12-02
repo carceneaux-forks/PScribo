@@ -1,6 +1,5 @@
-function Out-JsonTOC
-{
-<#
+function Out-JsonTOC {
+    <#
     .SYNOPSIS
         Output formatted Table of Contents
 #>
@@ -10,46 +9,21 @@ function Out-JsonTOC
         [Parameter(Mandatory, ValueFromPipeline)]
         [System.Management.Automation.PSObject] $TOC
     )
-    begin
-    {
+    begin {
         ## Fix Set-StrictMode
-        if (-not (Test-Path -Path Variable:\Options))
-        {
-            $options = New-PScriboJsonOption
-        }
+        # if (-not (Test-Path -Path Variable:\Options)) {
+        #     $options = New-PScriboJsonOption
+        # }
     }
-    process
-    {
-        $tocBuilder = New-Object -TypeName System.Text.StringBuilder
-        [ref] $null = $tocBuilder.AppendFormat('"{0}": [', $TOC.Name).AppendLine()
+    process {
+        $tocBuilder = [ordered]@{}
 
-        if ($Options.ContainsKey('EnableSectionNumbering'))
-        {
-            $maxSectionNumberLength = $Document.TOC.Number | ForEach-Object { $_.Length } | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum
-            foreach ($tocEntry in $Document.TOC)
-            {
-                [ref] $null = $tocBuilder.Append('{')
-                $sectionNumberPaddingLength = $maxSectionNumberLength - $tocEntry.Number.Length
-                $sectionNumberIndent = ''.PadRight($tocEntry.Level, ' ')
-                $sectionPadding = ''.PadRight($sectionNumberPaddingLength, ' ')
-                [ref] $null = $tocBuilder.AppendFormat('"{0}{1}  {2}{3}"', $tocEntry.Number, $sectionPadding, $sectionNumberIndent, $tocEntry.Name)
-                [ref] $null = $tocBuilder.AppendLine('},')
-            }
+        ## Populating TOC
+        ## Disregarding section numbering as its highly beneficial when parsing JSON after the fact
+        foreach ($tocEntry in $Document.TOC) {
+            [ref] $null = $tocBuilder.Add($tocEntry.Number, $tocEntry.Name)
         }
-        else
-        {
-            $maxSectionNumberLength = $Document.TOC.Level | Sort-Object | Select-Object -Last 1
-            foreach ($tocEntry in $Document.TOC)
-            {
-                [ref] $null = $tocBuilder.Append('{')
-                $sectionNumberIndent = ''.PadRight($tocEntry.Level, ' ')
-                [ref] $null = $tocBuilder.AppendFormat('"{0}{1}"', $sectionNumberIndent, $tocEntry.Name)
-                [ref] $null = $tocBuilder.AppendLine('},')
-            }
-        }
-
-        [ref] $null = $tocBuilder.AppendLine('],')
-
-        return $tocBuilder.ToString()
+    
+        return ($tocBuilder)
     }
 }
