@@ -84,26 +84,22 @@ function Out-JsonTOC {
                     1 {
                         if ($level -ne 1) {
                             if ($tocBuilder[-1].GetType() -eq [string]) {
-                                $newDict = [ordered]@{$tocBuilder[-1] = $tocEntry.Name}
-                                $tocBuilder[-1] = $newDict
+                                $tocBuilder[-1] = @{$tocBuilder[-1] = [System.Collections.ArrayList]::new()}
+                                $tocBuilder[-1][0].Add($tocEntry.Name)
                             }
-                            else {
-                                $tocBuilder[-1].Add($tocEntry.Name)
-                            }
+                            $tocBuilder[-1][0].Add($tocEntry.Name)
                             break
                         }                        
                         [ref] $null = $tocBuilder[-1].Add($tocEntry.Name)
                         break
                     }
-                    2 {
+                    1 {
                         if ($level -ne 2) {
                             if ($tocBuilder[-1][-1].GetType() -eq [string]) {
-                                $newDict = [ordered]@{$tocBuilder[-1][-1] = $tocEntry.Name}
-                                $tocBuilder[-1][-1] = $newDict
+                                $tocBuilder[-1][-1] = @{$tocBuilder[-1][-1] = [System.Collections.ArrayList]::new()}
+                                $tocBuilder[-1][-1][0].Add($tocEntry.Name)
                             }
-                            else {
-                                $tocBuilder[-1][-1].Add($tocEntry.Name)
-                            }
+                            $tocBuilder[-1][-1][0].Add($tocEntry.Name)
                             break
                         }                        
                         [ref] $null = $tocBuilder[-1][-1].Add($tocEntry.Name)
