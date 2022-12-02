@@ -18,11 +18,44 @@ function Out-JsonTOC {
     process {
         $tocBuilder = New-Object -TypeName 'System.Collections.ArrayList'
 
-        foreach ($tocEntry in $Document.TOC) {
-            $tocBuilder[$tocBuilder.Length-1]
-            [ref] $null = $tocBuilder.Add(@{"Name"=$tocEntry.Name})
-        }
+        # ## Initializing TOC
+        # $maxSectionNumberLength = $Document.TOC.Number | ForEach-Object { $_.Length } | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum
+        # 1..$maxSectionNumberLength | ForEach-Object { $tocBuilder.Add(@{}) }
 
+        ## Populating TOC
+        # if ($Options.ContainsKey('EnableSectionNumbering')) {
+            foreach ($tocEntry in $Document.TOC) {
+                switch ($tocEntry.Level) {
+                    0 {$
+                        [ref] $null = $tocBuilder.Add(@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
+                        break
+                    }
+                    1 {
+                        $level1 = $tocBuilder.Length - 1
+                        [ref] $null = $tocBuilder[$level1].Add(@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
+                        break
+                    }
+                    2 {
+                        $level1 = $tocBuilder.Length - 1
+                        $level2 = $tocBuilder[$level1].Length - 1
+                        [ref] $null = $tocBuilder[$level1][$level2].Add(@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
+                        break
+                    }
+                    3 {
+                        $level1 = $tocBuilder.Length - 1
+                        $level2 = $tocBuilder[$level1].Length - 1
+                        $level3 = $tocBuilder[$level1][$level2].Length - 1
+                        [ref] $null = $tocBuilder[$level1][$level2][$level3].Add(@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
+                        break
+                    }
+                }                
+            }
+        # }
+        # else {
+        #     foreach ($tocEntry in $Document.TOC) {
+        #         [ref] $null = $tocBuilder.Add(@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
+        #     }
+        # }
         Write-Host ($tocBuilder | ConvertTo-Json)
         return ($tocBuilder)
     }
