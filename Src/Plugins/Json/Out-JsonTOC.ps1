@@ -32,6 +32,7 @@ function Out-JsonTOC {
                     }
                     1 {
                         $level1 = $tocBuilder.Count - 1
+                        [ref] $null = $tocBuilder[$level1].Add(@{})
                         [ref] $null = $tocBuilder[$level1].Add(@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
                         break
                     }
