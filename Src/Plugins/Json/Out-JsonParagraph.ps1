@@ -14,44 +14,28 @@ function Out-JsonParagraph
     )
     begin
     {
-        ## Fix Set-StrictMode
-        if (-not (Test-Path -Path Variable:\Options))
-        {
-            $options = New-PScriboTextOption;
-        }
+        ## Initializing paragraph object
+        $paragraphBuilder = [ordered]@{}
+
+        ## Initializing string object
+        [System.Text.StringBuilder] $stringBuilder = New-Object -TypeName 'System.Text.StringBuilder'
     }
     process
     {
-        # $convertToAlignedStringParams = @{
-        #     Width       = 0
-        #     Tabs        = $Paragraph.Tabs
-        #     Align       = 'Left'
-        # }
-
-        # if (-not [System.String]::IsNullOrEmpty($Paragraph.Style))
-        # {
-        #     $paragraphStyle = Get-PScriboDocumentStyle -Style $Paragraph.Style
-        #     $convertToAlignedStringParams['Align'] = $paragraphStyle.Align
-        # }
-
-        [System.Text.StringBuilder] $paragraphBuilder = New-Object -TypeName 'System.Text.StringBuilder'
-        [ref] $null = $paragraphBuilder.AppendLine('[')
         foreach ($paragraphRun in $Paragraph.Sections)
         {
-            [ref] $null = $paragraphBuilder.Append('{"')
             $text = Resolve-PScriboToken -InputObject $paragraphRun.Text
-            [ref] $null = $paragraphBuilder.Append($text)
+            [ref] $null = $stringBuilder.Append($text)
 
             if (($paragraphRun.IsParagraphRunEnd -eq $false) -and
                 ($paragraphRun.NoSpace -eq $false))
             {
-                [ref] $null = $paragraphBuilder.Append(' ')
+                [ref] $null = $stringBuilder.Append(' ')
             }
-            [ref] $null = $paragraphBuilder.AppendLine('"},')
         }
 
-        # $convertToAlignedStringParams['InputObject'] = $paragraphBuilder.ToString()
-        [ref] $null = $paragraphBuilder.AppendLine('],')
-        return $paragraphBuilder.ToString()
+        [ref] $null = $paragraphBuilder.Add($Paragraph.Name, $stringBuilder)
+        
+        return $paragraphBuilder
     }
 }
