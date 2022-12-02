@@ -97,8 +97,8 @@ function Out-JsonTOC {
                         }
                         Write-Host "Key: $key"
                         Write-Host "Value: $($tocBuilder[-1][$key])"
-                        Write-Host "Type: $($tocBuilder[-1][$key].GetType())"
-                        [ref] $null = [System.Collections.ArrayList]$tocBuilder[-1][$key].Add($tocEntry.Name)
+                        Write-Host "Type: $($tocBuilder[-1][[System.Collections.ArrayList]$key].GetType())"
+                        [ref] $null = $tocBuilder[-1][[System.Collections.ArrayList]$key].Add($tocEntry.Name)
                         break
                     }
                     default {}
