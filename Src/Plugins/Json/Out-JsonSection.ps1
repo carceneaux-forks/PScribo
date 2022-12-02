@@ -18,6 +18,9 @@ function Out-JsonSection
 
         ## Initializing paragraph counter
         [int]$paragraph = 1
+
+        ## Initializing table counter
+        [int]$table = 1
     }
     process
     {
@@ -36,14 +39,11 @@ function Out-JsonSection
                     [ref] $null = $sectionBuilder.Add("paragraph$($paragraph)", (Out-JsonParagraph -Paragraph $subSection))
                     $paragraph++
                 }
-                # 'PScribo.Table'
-                # {
-                #     [ref] $null = $sectionBuilder.Append((Out-JsonTable -Table $subSection))
-                # }
-                # 'PScribo.Image'
-                # {
-                #     [ref] $null = $sectionBuilder.Append((Out-JsonImage -Image $subSection))
-                # }
+                'PScribo.Table'
+                {
+                    [ref] $null = $sectionBuilder.Add("table$($table)", (Out-JsonTable -Table $subSection))
+                    $table++
+                }
                 Default
                 {
                     Write-PScriboMessage -Message ($localized.PluginUnsupportedSection -f $subSection.Type) -IsWarning
