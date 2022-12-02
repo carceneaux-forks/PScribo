@@ -92,7 +92,7 @@ function Out-JsonTOC {
                         [ref] $null = $tocBuilder[-1][$key].Add($tocEntry.Name)
                         break
                     }
-                    1 { 
+                    2 { 
                         if ($level -ne 2) {       
                             $key = $tocBuilder[-1][-1]                     
                             if ($tocBuilder[-1][-1].GetType() -eq [string]) {
