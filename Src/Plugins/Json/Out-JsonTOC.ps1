@@ -82,31 +82,23 @@ function Out-JsonTOC {
                         break
                     }
                     1 {
+                        $key = $tocBuilder[-1]
                         if ($level -ne 1) {
-                            $key = $tocBuilder[-1]
                             if ($tocBuilder[-1].GetType() -eq [string]) {
-                                $tocBuilder[-1] = @{$key=$null}
-                                $tocBuilder[-1].[string]$key = [System.Collections.ArrayList]::new()
-                                $tocBuilder[-1].[string]$key.Add($tocEntry.Name)
+                                $tocBuilder[-1] = @{$key = [System.Collections.ArrayList]::new()}
                             }
-                            $tocBuilder[-1].[string]$key.Add($tocEntry.Name)
-                            break
                         }                        
-                        [ref] $null = $tocBuilder[-1].Add($tocEntry.Name)
+                        [ref] $null = $tocBuilder[-1][$key].Add($tocEntry.Name)
                         break
                     }
                     1 {
-                        if ($level -ne 2) {
-                            $key = $tocBuilder[-1][-1]
+                        $key = $tocBuilder[-1][-1]
+                        if ($level -ne 2) {                            
                             if ($tocBuilder[-1][-1].GetType() -eq [string]) {
-                                $tocBuilder[-1][-1] = @{$key=$null}
-                                $tocBuilder[-1][-1].[string]$key = [System.Collections.ArrayList]::new()
-                                $tocBuilder[-1][-1].[string]$key.Add($tocEntry.Name)
+                                $tocBuilder[-1][-1] = @{$key = [System.Collections.ArrayList]::new()}
                             }
-                            $tocBuilder[-1][-1].[string]$key.Add($tocEntry.Name)
-                            break
                         }                        
-                        [ref] $null = $tocBuilder[-1][-1].Add($tocEntry.Name)
+                        $tocBuilder[-1][-1][$key].Add($tocEntry.Name)
                         break
                     }
                     default {}
