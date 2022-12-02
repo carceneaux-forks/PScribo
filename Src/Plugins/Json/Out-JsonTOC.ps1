@@ -27,7 +27,7 @@ function Out-JsonTOC {
             foreach ($tocEntry in $Document.TOC) {
                 switch ($tocEntry.Level) {
                     0 {
-                        [ref] $null = $tocBuilder.Add(@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
+                        [ref] $null = $tocBuilder.Add([ordered]@{"Section"=$tocEntry.Number;"Name"=$tocEntry.Name})
                         break
                     }
                     1 {
