@@ -74,7 +74,7 @@ function Out-JsonTOC {
             }
         }
         else {
-            $level = $null
+            $level = 0
             foreach ($tocEntry in $Document.TOC) {
                 Write-Host "Beginning...$($tocEntry.Name)"
                 Write-Host "Current Level: $($tocEntry.Level)"
