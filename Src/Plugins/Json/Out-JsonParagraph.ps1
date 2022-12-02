@@ -14,28 +14,24 @@ function Out-JsonParagraph
     )
     begin
     {
-        ## Initializing paragraph object
-        $paragraphBuilder = [ordered]@{}
-
         ## Initializing string object
-        [System.Text.StringBuilder] $stringBuilder = New-Object -TypeName 'System.Text.StringBuilder'
+        [System.Text.StringBuilder] $paragraphBuilder = New-Object -TypeName 'System.Text.StringBuilder'
     }
     process
     {
         foreach ($paragraphRun in $Paragraph.Sections)
         {
             $text = Resolve-PScriboToken -InputObject $paragraphRun.Text
-            [ref] $null = $stringBuilder.Append($text)
+            [ref] $null = $paragraphBuilder.Append($text)
 
             if (($paragraphRun.IsParagraphRunEnd -eq $false) -and
                 ($paragraphRun.NoSpace -eq $false))
             {
-                [ref] $null = $stringBuilder.Append(' ')
+                [ref] $null = $paragraphBuilder.Append(' ')
             }
         }
 
-        [ref] $null = $paragraphBuilder.Add($Paragraph.Name, $stringBuilder)
         
-        return $paragraphBuilder
+        return $paragraphBuilder.ToString()
     }
 }

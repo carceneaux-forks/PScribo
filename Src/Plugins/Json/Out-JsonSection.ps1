@@ -30,7 +30,7 @@ function Out-JsonSection
                 }
                 'PScribo.Paragraph'
                 {
-                    [ref] $null = $sectionBuilder.Append((Out-JsonParagraph -Paragraph $subSection))
+                    [ref] $null = $sectionBuilder.Add("Paragraph", (Out-JsonParagraph -Paragraph $subSection))
                 }
                 # 'PScribo.Table'
                 # {
