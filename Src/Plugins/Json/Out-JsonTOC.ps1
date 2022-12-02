@@ -27,43 +27,43 @@ function Out-JsonTOC {
                     break
                 }
                 1 {
-                    [ref] $null = $tocBuilder[-1].Add($tocEntry.Number, [ordered]@{"Section" = $tocEntry.Number; "Name" = $tocEntry.Name})
+                    [ref] $null = $tocBuilder[-1].Add($tocEntry.Number, [ordered]@{"Name" = $tocEntry.Name})
                     break
                 }
                 2 {
-                    [ref] $null = $tocBuilder[-1][-1].Add($tocEntry.Number, [ordered]@{"Section" = $tocEntry.Number; "Name" = $tocEntry.Name})
+                    [ref] $null = $tocBuilder[-1][-1].Add($tocEntry.Number, [ordered]@{"Name" = $tocEntry.Name})
                     break
                 }
                 3 {
-                    [ref] $null = $tocBuilder[-1][-1][-1].Add($tocEntry.Number, [ordered]@{"Section" = $tocEntry.Number; "Name" = $tocEntry.Name})
+                    [ref] $null = $tocBuilder[-1][-1][-1].Add($tocEntry.Number, [ordered]@{"Name" = $tocEntry.Name})
                     break
                 }
                 4 {
-                    [ref] $null = $tocBuilder[-1][-1][-1][-1].Add($tocEntry.Number, [ordered]@{"Section" = $tocEntry.Number; "Name" = $tocEntry.Name})
+                    [ref] $null = $tocBuilder[-1][-1][-1][-1].Add($tocEntry.Number, [ordered]@{"Name" = $tocEntry.Name})
                     break
                 }
                 5 {
-                    [ref] $null = $tocBuilder[-1][-1][-1][-1][-1].Add($tocEntry.Number, [ordered]@{"Section" = $tocEntry.Number; "Name" = $tocEntry.Name})
+                    [ref] $null = $tocBuilder[-1][-1][-1][-1][-1].Add($tocEntry.Number, [ordered]@{"Name" = $tocEntry.Name})
                     break
                 }
                 6 {
-                    [ref] $null = $tocBuilder[-1][-1][-1][-1][-1][-1].Add($tocEntry.Number, [ordered]@{"Section" = $tocEntry.Number; "Name" = $tocEntry.Name})
+                    [ref] $null = $tocBuilder[-1][-1][-1][-1][-1][-1].Add($tocEntry.Number, [ordered]@{"Name" = $tocEntry.Name})
                     break
                 }
                 7 {
-                    [ref] $null = $tocBuilder[-1][-1][-1][-1][-1][-1][-1].Add($tocEntry.Number, [ordered]@{"Section" = $tocEntry.Number; "Name" = $tocEntry.Name})
+                    [ref] $null = $tocBuilder[-1][-1][-1][-1][-1][-1][-1].Add($tocEntry.Number, [ordered]@{"Name" = $tocEntry.Name})
                     break
                 }
                 8 {
-                    [ref] $null = $tocBuilder[-1][-1][-1][-1][-1][-1][-1][-1].Add($tocEntry.Number, [ordered]@{"Section" = $tocEntry.Number; "Name" = $tocEntry.Name})
+                    [ref] $null = $tocBuilder[-1][-1][-1][-1][-1][-1][-1][-1].Add($tocEntry.Number, [ordered]@{"Name" = $tocEntry.Name})
                     break
                 }
                 9 {
-                    [ref] $null = $tocBuilder[-1][-1][-1][-1][-1][-1][-1][-1][-1].Add($tocEntry.Number, [ordered]@{"Section" = $tocEntry.Number; "Name" = $tocEntry.Name})
+                    [ref] $null = $tocBuilder[-1][-1][-1][-1][-1][-1][-1][-1][-1].Add($tocEntry.Number, [ordered]@{"Name" = $tocEntry.Name})
                     break
                 }
                 10 {
-                    [ref] $null = $tocBuilder[-1][-1][-1][-1][-1][-1][-1][-1][-1][-1].Add($tocEntry.Number, [ordered]@{"Section" = $tocEntry.Number; "Name" = $tocEntry.Name})
+                    [ref] $null = $tocBuilder[-1][-1][-1][-1][-1][-1][-1][-1][-1][-1].Add($tocEntry.Number, [ordered]@{"Name" = $tocEntry.Name})
                     break
                 }
             }
