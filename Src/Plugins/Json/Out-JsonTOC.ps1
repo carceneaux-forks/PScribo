@@ -74,7 +74,7 @@ function Out-JsonTOC {
             }
         }
         else {
-            $level = 0
+            $level = $null
             foreach ($tocEntry in $Document.TOC) {
                 Write-Host "Beginning...$($tocEntry.Name)"
                 Write-Host "Current Level: $($tocEntry.Level)"
@@ -100,11 +100,11 @@ function Out-JsonTOC {
                         Write-Host "Value: $($tocBuilder[-1][$key])"
                         Write-Host "Type: $($tocBuilder[-1][$key].GetType())"
                         [ref] $null = $tocBuilder[-1][$key].Add($tocEntry.Name)
+                        Write-Host "Post-Type: $($tocBuilder[-1][$key].GetType())"
                         break
                     }
                     default {}
                 }
-                Write-Host "Post-Type: $($tocBuilder[-1][$key].GetType())"
                 $level = $tocEntry.Level
             }
         }
