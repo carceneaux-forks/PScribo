@@ -63,15 +63,13 @@ function Out-JsonDocument
             {
                 'PScribo.Section'
                 {
-                    Write-Host "Number: $($subSection.Number) . Type: $($subSection.Number.GetType())"
+                    ## Corrects behavior where NOTOC* heading is used
                     if (("" -eq $subSection.Number))
                     {
-                        Write-Host "Using name..."
                         [ref] $null = $jsonBuilder.Add($subSection.Name, (Out-JsonSection -Section $subSection))
                     }
                     else
                     {
-                        Write-Host "Using number..."
                         [ref] $null = $jsonBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))
                     }
                 }

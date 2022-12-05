@@ -33,17 +33,13 @@ function Out-JsonSection
             {
                 'PScribo.Section'
                 {
-                    # Write-Host ($subSection | Select-Object -Property * -ExcludeProperty 'Sections' | ConvertTo-Json -Depth 100)
-                    # Write-Host ($sectionBuilder | ConvertTo-Json -Depth 100)
-                    Write-Host "Number: $($subSection.Number) . Type: $($subSection.Number.GetType())"
+                    ## Corrects behavior where NOTOC* heading is used
                     if (("" -eq $subSection.Number))
                     {
-                        Write-Host "Using name..."
                         [ref] $null = $sectionBuilder.Add($subSection.Name, (Out-JsonSection -Section $subSection))
                     }
                     else
                     {
-                        Write-Host "Using number..."
                         [ref] $null = $sectionBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))
                     }
                 }
