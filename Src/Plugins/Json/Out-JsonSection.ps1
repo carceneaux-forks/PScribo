@@ -50,6 +50,7 @@ function Out-JsonSection
                     Write-Host "table$($table)"
                     [ref] $null = $sectionBuilder.Add("table$($table)", $object)
                     [ref] $null = $object
+                    Write-Host "After the fact..."
                     $table++
                 }
                 Default
