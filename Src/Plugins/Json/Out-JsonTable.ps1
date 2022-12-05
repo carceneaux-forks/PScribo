@@ -37,7 +37,7 @@ function Out-JsonTable
             {
                 Write-Host "List"
                 Write-Host $row.Name
-                Write-Host $row | Select-Object -Property * -ExcludeProperty '*__Style' | ConvertTo-Json -Depth 100  
+                Write-Host $row | Select-Object -Property * -ExcludeProperty '__Style' | ConvertTo-Json -Depth 100  
                 # $tableText = ($Table.Rows |
                 #     Select-Object -Property * -ExcludeProperty '*__Style' |
                 #         Format-List | Out-String).Trim([System.Environment]::NewLine)
