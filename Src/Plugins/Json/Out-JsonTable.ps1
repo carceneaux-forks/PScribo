@@ -41,8 +41,8 @@ function Out-JsonTable
             #                 Format-Table -Wrap -AutoSize |
             #                     Out-String).Trim([System.Environment]::NewLine)
             $tableText = (ConvertTo-PSObjectKeyedListTable -Table $Table |
-                            Select-Object -Property * -ExcludeProperty '*__Style') |
-                            Format-Table -Wrap -AutoSize
+                            Select-Object -Property * -ExcludeProperty '*__Style') #|
+                            #Format-Table -Wrap -AutoSize
         }
         elseif ($Table.IsList)
         {
@@ -51,8 +51,8 @@ function Out-JsonTable
             #     Select-Object -Property * -ExcludeProperty '*__Style' |
             #         Format-List | Out-String).Trim([System.Environment]::NewLine)
             $tableText = ($Table.Rows |
-                Select-Object -Property * -ExcludeProperty '*__Style') |
-                Format-Table -Wrap -AutoSize
+                Select-Object -Property * -ExcludeProperty '*__Style') #|
+                #Format-Table -Wrap -AutoSize
         }
         else
         {
@@ -64,15 +64,15 @@ function Out-JsonTable
             #                     Format-Table -Wrap -AutoSize |
             #                         Out-String).Trim([System.Environment]::NewLine)
             $tableText = ($Table.Rows |
-                            Select-Object -Property * -ExcludeProperty '*__Style') |
-                            Format-Table -Wrap -AutoSize
+                            Select-Object -Property * -ExcludeProperty '*__Style') #|
+                            #Format-Table -Wrap -AutoSize
         }
 
         # Write-Host "tableText type: $($tableText.GetType())"
-        # Write-Host "tableText unformatted:"
-        # Write-Host $tableText
-        # Write-Host "tableText json:"
-        # Write-Host $tableText | ConvertTo-Json -Depth 100
+        Write-Host "tableText unformatted:"
+        Write-Host $tableText
+        Write-Host "tableText json:"
+        Write-Host $tableText | ConvertTo-Json -Depth 100
         
         # [ref] $null = $tableBuilder.Append($tableJson)
         [ref] $null = $tableBuilder.Add("Table Name","Table Data")
