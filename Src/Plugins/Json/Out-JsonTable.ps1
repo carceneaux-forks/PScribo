@@ -18,61 +18,57 @@ function Out-JsonTable
     }
     process
     {
-        
-        ## Rendering the table
-        if ($Table.IsKeyedList)
+        foreach ($row in $Table.Rows)
         {
-            Write-Host "Keyed List"
-            Write-Host $row.Name
-            Write-Host $row | ConvertTo-Json -Depth 100
-            ## Create new objects with headings as properties
-            # $tableText = (ConvertTo-PSObjectKeyedListTable -Table $Table |
-            #                 Select-Object -Property * -ExcludeProperty '*__Style' |
-            #                 Format-Table -Wrap -AutoSize |
-            #                     Out-String).Trim([System.Environment]::NewLine)
-            $tableText = (ConvertTo-PSObjectKeyedListTable -Table $Table |
-                            Select-Object -Property * -ExcludeProperty '*__Style') #|
-                            #Format-Table -Wrap -AutoSize
-        }
-        elseif ($Table.IsList)
-        {
-            Write-Host "List"                
-            # $tableText = ($Table.Rows |
-            #     Select-Object -Property * -ExcludeProperty '*__Style' |
-            #         Format-List | Out-String).Trim([System.Environment]::NewLine)
-            $tableText = ($Table.Rows |
-                Select-Object -Property * -ExcludeProperty '*__Style') #|
-                #Format-Table -Wrap -AutoSize
-            Write-Host $tableText | ConvertTo-Json -Depth 100
-        }
-        else
-        {
-            Write-Host "Not a List"
-            #Write-Host $row
-            ## Don't trim tabs for table headers
-            ## Tables set to AutoSize as otherwise rendering is different between PoSh v4 and v5
-            # $tableText = ($Table.Rows |
-            #                 Select-Object -Property * -ExcludeProperty '*__Style' |
-            #                     Format-Table -Wrap -AutoSize |
-            #                         Out-String).Trim([System.Environment]::NewLine)
-            # $tableText = ($Table.Rows |
-            #                 Select-Object -Property * -ExcludeProperty '*__Style') #|
-                            #Format-Table -Wrap -AutoSize
-        }
-        # foreach ($row in $Table.Rows)
-        # {
+            if ($Table.IsKeyedList)
+            {
+                Write-Host "Keyed List"
+                Write-Host $row | ConvertTo-Json -Depth 100
+                ## Create new objects with headings as properties
+                # $tableText = (ConvertTo-PSObjectKeyedListTable -Table $Table |
+                #                 Select-Object -Property * -ExcludeProperty '*__Style' |
+                #                 Format-Table -Wrap -AutoSize |
+                #                     Out-String).Trim([System.Environment]::NewLine)
+                # $tableText = (ConvertTo-PSObjectKeyedListTable -Table $Table |
+                #                 Select-Object -Property * -ExcludeProperty '*__Style') #|
+                                #Format-Table -Wrap -AutoSize
+            }
+            elseif ($Table.IsList)
+            {
+                Write-Host "List"              
+                Write-Host $row | ConvertTo-Json -Depth 100  
+                # $tableText = ($Table.Rows |
+                #     Select-Object -Property * -ExcludeProperty '*__Style' |
+                #         Format-List | Out-String).Trim([System.Environment]::NewLine)
+                # $tableText = ($Table.Rows |
+                #     Select-Object -Property * -ExcludeProperty '*__Style') #|
+                    #Format-Table -Wrap -AutoSize
+            }
+            else
+            {
+                Write-Host "Not a List"
+                #Write-Host $row
+                ## Don't trim tabs for table headers
+                ## Tables set to AutoSize as otherwise rendering is different between PoSh v4 and v5
+                # $tableText = ($Table.Rows |
+                #                 Select-Object -Property * -ExcludeProperty '*__Style' |
+                #                     Format-Table -Wrap -AutoSize |
+                #                         Out-String).Trim([System.Environment]::NewLine)
+                # $tableText = ($Table.Rows |
+                #                 Select-Object -Property * -ExcludeProperty '*__Style') #|
+                                #Format-Table -Wrap -AutoSize
+            }
             
             
-            
-        #     # foreach ($property in $row.PSObject.Properties)
-        #     # {
-        #     #     if ($property.Value -is [System.Array])
-        #     #     {
-        #     #         $property.Value = [System.String]::Join(' ', $property.Value)
-        #     #     }
-        #     #     $property.Value = Resolve-PScriboToken -InputObject $property.Value
-        #     # }
-        # }
+            # foreach ($property in $row.PSObject.Properties)
+            # {
+            #     if ($property.Value -is [System.Array])
+            #     {
+            #         $property.Value = [System.String]::Join(' ', $property.Value)
+            #     }
+            #     $property.Value = Resolve-PScriboToken -InputObject $property.Value
+            # }
+        }
 
 
         
