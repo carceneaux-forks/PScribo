@@ -33,7 +33,7 @@ function Out-JsonSection
             {
                 'PScribo.Section'
                 {
-                    Write-Host ($subSection | ?{$_.Type -ne "PScribo.Image"} | ConvertTo-Json -Depth 100)
+                    Write-Host ($subSection | Select-Object -Property * -ExcludeProperty 'Sections' | ConvertTo-Json -Depth 100)
                     # Write-Host ($sectionBuilder | ConvertTo-Json -Depth 100)
                     # Write-Host "Number: $($subSection.Number)"
                     [ref] $null = $sectionBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))
