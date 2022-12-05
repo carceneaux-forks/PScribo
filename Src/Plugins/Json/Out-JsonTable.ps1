@@ -81,6 +81,6 @@ function Out-JsonTable
             # [ref] $null = $tableBuilder.AppendFormat('"caption": "{0}"', $Table.Caption).AppendLine()
         }
 
-        return $Table.Rows
+        return ($Table.Rows | Select-Object -Property * -ExcludeProperty '*__Style')
     }
 }
