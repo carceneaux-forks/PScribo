@@ -47,6 +47,7 @@ function Out-JsonSection
                     [PSCustomObject]$object = Out-JsonTable -Table $subSection
                     Write-Host $object.GetType()
                     Write-Host $object
+                    Write-Host "table$($table)"
                     [ref] $null = $sectionBuilder.Add("table$($table)", $object)
                     [ref] $null = $object
                     $table++
