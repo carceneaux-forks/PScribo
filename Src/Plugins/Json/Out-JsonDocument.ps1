@@ -63,10 +63,8 @@ function Out-JsonDocument
             {
                 'PScribo.Section'
                 {
-                    Write-Host ($jsonBuilder | ConvertTo-Json -Depth 100)
-                    Write-Host "Number: $($subSection.Number)"
-                    $object = Out-JsonSection -Section $subSection
-                    Write-Host $object
+                    # Write-Host ($jsonBuilder | ConvertTo-Json -Depth 100)
+                    # Write-Host "Number: $($subSection.Number)"
                     [ref] $null = $jsonBuilder.Add($subSection.Number, $object)
                     [ref] $null = $object
                 }
