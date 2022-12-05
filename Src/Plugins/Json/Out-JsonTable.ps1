@@ -18,8 +18,9 @@ function Out-JsonTable
     }
     process
     {
-        $json = $Table.Rows | ConvertTo-Json -Depth 100
-        Write-Host $json
+        Write-Host $Table.Rows.Count
+        # $json = $Table.Rows | ConvertTo-Json -Depth 100
+        # Write-Host $json
 
         # foreach ($row in $Table.Rows)
         # {
