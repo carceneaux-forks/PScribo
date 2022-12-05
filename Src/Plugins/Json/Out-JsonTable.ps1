@@ -36,7 +36,7 @@ function Out-JsonTable
             elseif ($Table.IsList)
             {
                 Write-Host "List"
-                Write-Host ($row | Get-Member | ft -AutoSize)
+                Write-Host ($row | Get-Member | fl)
                 # Write-Host $row | ConvertTo-Json -Depth 100  
                 # $tableText = ($Table.Rows |
                 #     Select-Object -Property * -ExcludeProperty '*__Style' |
