@@ -21,7 +21,7 @@ function Out-JsonTable
         ## We need to replace page numbers before outputting the table
         foreach ($row in $Table.Rows)
         {
-            Write-Output $row.PSObject | ConvertTo-Json -Depth 100
+            Write-Output $row | ConvertTo-Json -Depth 100
             foreach ($property in $row.PSObject.Properties)
             {
                 if ($property.Value -is [System.Array])
