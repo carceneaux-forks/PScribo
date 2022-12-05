@@ -70,7 +70,7 @@ function Out-JsonTable
         #     #     $property.Value = Resolve-PScriboToken -InputObject $property.Value
         #     # }
         # }
-        [PSCustomObject]$tableBuilder = $Table.Rows | Select-Object -Property * -ExcludeProperty '*__Style'
+        # [PSCustomObject]$tableBuilder = $Table.Rows | Select-Object -Property * -ExcludeProperty '*__Style'
 
         
         # [ref] $null = $tableBuilder.Append($tableJson)
@@ -81,6 +81,6 @@ function Out-JsonTable
             # [ref] $null = $tableBuilder.AppendFormat('"caption": "{0}"', $Table.Caption).AppendLine()
         }
 
-        return $tableBuilder
+        return ($Table.Rows | Select-Object -Property * -ExcludeProperty '*__Style')
     }
 }

@@ -74,7 +74,11 @@ function Out-JsonDocument
                 'PScribo.Table'
                 {
                     Write-Host "Table"
-                    [ref] $null = $jsonBuilder.Add("table$($table)", (Out-JsonTable -Table $subSection))
+                    [PSCustomObject]$object = Out-JsonTable -Table $subSection
+                    Write-Host $object.GetType()
+                    Write-Host $object
+                    [ref] $null = $jsonBuilder.Add("table$($table)", $object)
+                    [ref] $null = $object
                     $table++
                 }
                 'PScribo.TOC'
