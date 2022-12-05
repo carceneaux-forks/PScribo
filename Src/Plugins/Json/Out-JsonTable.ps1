@@ -24,7 +24,7 @@ function Out-JsonTable
         {
             Write-Host $number
             $number++
-            $row
+            Write-Host $row
             foreach ($property in $row.PSObject.Properties)
             {
                 if ($property.Value -is [System.Array])
