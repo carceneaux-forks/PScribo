@@ -69,10 +69,10 @@ function Out-JsonTable
         }
 
         # Write-Host "tableText type: $($tableText.GetType())"
-        Write-Host "tableText unformatted:"
-        Write-Host $tableText
-        Write-Host "tableText json:"
-        Write-Host $tableText | ConvertTo-Json -Depth 100
+        # Write-Host "tableText unformatted:"
+        # Write-Host $tableText
+        # Write-Host "tableText json:"
+        # Write-Host $tableText | ConvertTo-Json -Depth 100
         
         # [ref] $null = $tableBuilder.Append($tableJson)
         [ref] $null = $tableBuilder.Add("Table Name","Table Data")
