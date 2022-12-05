@@ -38,13 +38,13 @@ function Out-JsonSection
                     Write-Host "Number: $($subSection.Number) . Type: $($subSection.Number.GetType())"
                     if (("" -eq $subSection.Number))
                     {
-                        Write-Host "Using number..."
-                        [ref] $null = $sectionBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))
+                        Write-Host "Using name..."
+                        [ref] $null = $sectionBuilder.Add($subSection.Name, (Out-JsonSection -Section $subSection))
                     }
                     else
                     {
-                        Write-Host "Using name..."
-                        [ref] $null = $sectionBuilder.Add($subSection.Name, (Out-JsonSection -Section $subSection))
+                        Write-Host "Using number..."
+                        [ref] $null = $sectionBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))
                     }
                 }
                 'PScribo.Paragraph'
