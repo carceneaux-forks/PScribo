@@ -44,7 +44,11 @@ function Out-JsonSection
                 'PScribo.Table'
                 {
                     Write-Host "Section: Table"
-                    [ref] $null = $sectionBuilder.Add("table$($table)", [PSCustomObject](Out-JsonTable -Table $subSection))
+                    [PSCustomObject]$object = Out-JsonTable -Table $subSection
+                    Write-Host $object.GetType()
+                    Write-Host $object
+                    [ref] $null = $sectionBuilder.Add("table$($table)", $object)
+                    [ref] $null = $object
                     $table++
                 }
                 Default
