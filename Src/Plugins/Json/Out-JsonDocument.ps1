@@ -63,22 +63,22 @@ function Out-JsonDocument
                 'PScribo.Section'
                 {
                     Write-Host "Section"
-                    [ref] $null = $jsonBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))
+                    Write-Host $jsonBuilder
+                    Write-Host "Number: $($subSection.Number)"
+                    $object = Out-JsonSection -Section $subSection
+                    Write-Host $object
+                    [ref] $null = $jsonBuilder.Add($subSection.Number, $object)
                 }
                 'PScribo.Paragraph'
                 {
-                    Write-Host "Paragraph"
+                    Write-PScriboMessage -Message "Paragraph" -IsDebug
                     [ref] $null = $jsonBuilder.Add("paragraph$($paragraph)", (Out-JsonParagraph -Paragraph $subSection))
                     $paragraph++
                 }
                 'PScribo.Table'
                 {
                     Write-Host "Table"
-                    [PSCustomObject]$object = Out-JsonTable -Table $subSection
-                    Write-Host $object.GetType()
-                    Write-Host $object
-                    [ref] $null = $jsonBuilder.Add("table$($table)", $object)
-                    [ref] $null = $object
+                    [ref] $null = $jsonBuilder.Add("table$($table)", (Out-JsonTable -Table $subSection))
                     $table++
                 }
                 'PScribo.TOC'
