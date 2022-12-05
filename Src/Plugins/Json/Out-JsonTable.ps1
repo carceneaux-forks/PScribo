@@ -47,8 +47,8 @@ function Out-JsonTable
             }
             else
             {
-                # Write-Host "Not a List"
-                #Write-Host $row
+                Write-Host "Not a List"
+                Write-Host $row.GetType() 
                 ## Don't trim tabs for table headers
                 ## Tables set to AutoSize as otherwise rendering is different between PoSh v4 and v5
                 # $tableText = ($Table.Rows |
