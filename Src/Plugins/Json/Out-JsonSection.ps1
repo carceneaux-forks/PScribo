@@ -36,15 +36,15 @@ function Out-JsonSection
                     # Write-Host ($subSection | Select-Object -Property * -ExcludeProperty 'Sections' | ConvertTo-Json -Depth 100)
                     # Write-Host ($sectionBuilder | ConvertTo-Json -Depth 100)
                     Write-Host "Number: $($subSection.Number)"
-                    if ($null -eq $subSection.Number)
-                    {
-                        Write-Host "Using name..."
-                        [ref] $null = $sectionBuilder.Add($subSection.Name, (Out-JsonSection -Section $subSection))
-                    }
-                    else
+                    if (($subSection.Number -is [int]) -or ($subSection.Number -is [double]))
                     {
                         Write-Host "Using number..."
                         [ref] $null = $sectionBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))
+                    }
+                    else
+                    {
+                        Write-Host "Using name..."
+                        [ref] $null = $sectionBuilder.Add($subSection.Name, (Out-JsonSection -Section $subSection))
                     }
                 }
                 'PScribo.Paragraph'
