@@ -18,10 +18,13 @@ function Out-JsonTable
     }
     process
     {
+        $number = 1
         ## We need to replace page numbers before outputting the table
         foreach ($row in $Table.Rows)
         {
-            Write-Host $row | ConvertTo-Json -Depth 100
+            Write-Host $number
+            $number++
+            $row
             foreach ($property in $row.PSObject.Properties)
             {
                 if ($property.Value -is [System.Array])
