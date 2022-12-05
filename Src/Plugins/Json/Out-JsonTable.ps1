@@ -70,7 +70,7 @@ function Out-JsonTable
         #     #     $property.Value = Resolve-PScriboToken -InputObject $property.Value
         #     # }
         # }
-        [ref] $tableBuilder = $Table.Rows | Select-Object -Property * -ExcludeProperty '*__Style'
+        [PSCustomObject]$tableBuilder = $Table.Rows | Select-Object -Property * -ExcludeProperty '*__Style'
 
         
         # [ref] $null = $tableBuilder.Append($tableJson)
