@@ -64,7 +64,7 @@ function Out-JsonDocument
                 'PScribo.Section'
                 {
                     Write-Host "Number: $($subSection.Number) . Type: $($subSection.Number.GetType())"
-                    if (($subSection.Number -is [int]) -or ($subSection.Number -is [double]))
+                    if (("" -eq $subSection.Number))
                     {
                         Write-Host "Using number..."
                         [ref] $null = $jsonBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))

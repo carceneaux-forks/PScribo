@@ -36,7 +36,7 @@ function Out-JsonSection
                     # Write-Host ($subSection | Select-Object -Property * -ExcludeProperty 'Sections' | ConvertTo-Json -Depth 100)
                     # Write-Host ($sectionBuilder | ConvertTo-Json -Depth 100)
                     Write-Host "Number: $($subSection.Number) . Type: $($subSection.Number.GetType())"
-                    if (($subSection.Number -is [int]) -or ($subSection.Number -is [double]))
+                    if (("" -eq $subSection.Number))
                     {
                         Write-Host "Using number..."
                         [ref] $null = $sectionBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))
