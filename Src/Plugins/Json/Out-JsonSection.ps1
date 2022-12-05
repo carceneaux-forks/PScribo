@@ -33,7 +33,12 @@ function Out-JsonSection
             {
                 'PScribo.Section'
                 {
-                    $sectionBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))
+                    Write-Host $sectionBuilder
+                    Write-Host "Number: $($subSection.Number)"
+                    $object = Out-JsonSection -Section $subSection
+                    Write-Host $object
+                    [ref] $null = $sectionBuilder.Add($subSection.Number, $object)
+                    [ref] $null = $object
                 }
                 'PScribo.Paragraph'
                 {
@@ -42,7 +47,7 @@ function Out-JsonSection
                 }
                 'PScribo.Table'
                 {
-                    [ref] $null = $sectionBuilder.Add("table$($table)", [PSCustomObject](Out-JsonTable -Table $subSection))
+                    [ref] $null = $sectionBuilder.Add("table$($table)", (Out-JsonTable -Table $subSection))
                     $table++
                 }
                 Default
