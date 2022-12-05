@@ -58,7 +58,7 @@ function Out-JsonDocument
 
         foreach ($subSection in $Document.Sections.GetEnumerator())
         {
-            Write-Host "Type: $($subSection.Type)"
+            Write-Host $subSection
             switch ($subSection.Type)
             {
                 'PScribo.Section'
