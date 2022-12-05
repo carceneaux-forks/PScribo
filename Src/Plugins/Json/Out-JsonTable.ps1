@@ -36,7 +36,7 @@ function Out-JsonTable
             elseif ($Table.IsList)
             {
                 Write-Host "List"
-                Write-Host $row.GetType()          
+                Write-Host ($row | Get-Member)
                 # Write-Host $row | ConvertTo-Json -Depth 100  
                 # $tableText = ($Table.Rows |
                 #     Select-Object -Property * -ExcludeProperty '*__Style' |
@@ -47,8 +47,8 @@ function Out-JsonTable
             }
             else
             {
-                Write-Host "Not a List"
-                Write-Host $row.GetType() 
+                # Write-Host "Not a List"
+                # Write-Host $row.Name
                 ## Don't trim tabs for table headers
                 ## Tables set to AutoSize as otherwise rendering is different between PoSh v4 and v5
                 # $tableText = ($Table.Rows |
