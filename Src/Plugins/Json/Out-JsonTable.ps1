@@ -41,7 +41,8 @@ function Out-JsonTable
             #                 Format-Table -Wrap -AutoSize |
             #                     Out-String).Trim([System.Environment]::NewLine)
             $tableText = (ConvertTo-PSObjectKeyedListTable -Table $Table |
-                            Select-Object -Property * -ExcludeProperty '*__Style')
+                            Select-Object -Property * -ExcludeProperty '*__Style') |
+                            Format-Table -Wrap -AutoSize
         }
         elseif ($Table.IsList)
         {
@@ -50,7 +51,8 @@ function Out-JsonTable
             #     Select-Object -Property * -ExcludeProperty '*__Style' |
             #         Format-List | Out-String).Trim([System.Environment]::NewLine)
             $tableText = ($Table.Rows |
-                Select-Object -Property * -ExcludeProperty '*__Style')
+                Select-Object -Property * -ExcludeProperty '*__Style') |
+                Format-Table -Wrap -AutoSize
         }
         else
         {
@@ -62,7 +64,8 @@ function Out-JsonTable
             #                     Format-Table -Wrap -AutoSize |
             #                         Out-String).Trim([System.Environment]::NewLine)
             $tableText = ($Table.Rows |
-                            Select-Object -Property * -ExcludeProperty '*__Style')
+                            Select-Object -Property * -ExcludeProperty '*__Style') |
+                            Format-Table -Wrap -AutoSize
         }
 
         # Write-Host "tableText type: $($tableText.GetType())"
