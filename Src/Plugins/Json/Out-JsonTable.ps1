@@ -11,14 +11,8 @@ function Out-JsonTable
         [Parameter(Mandatory, ValueFromPipeline)]
         [System.Management.Automation.PSObject] $Table
     )
-    begin
-    {
-        ## Initializing table object
-        $tableBuilder = [ordered]@{}
-    }
     process
     {
-        Write-Host $Table.Rows.Count
         # $json = $Table.Rows | ConvertTo-Json -Depth 100
         # Write-Host $json
 
@@ -80,13 +74,13 @@ function Out-JsonTable
 
         
         # [ref] $null = $tableBuilder.Append($tableJson)
-        [ref] $null = $tableBuilder.Add("Table Name","Table Data")
+        # [ref] $null = $tableBuilder.Add("Table Name","Table Data")
 
         if ($Table.HasCaption)
         {
             # [ref] $null = $tableBuilder.AppendFormat('"caption": "{0}"', $Table.Caption).AppendLine()
         }
 
-        return $tableBuilder
+        return $Table.Rows
     }
 }
