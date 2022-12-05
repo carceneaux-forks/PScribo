@@ -47,7 +47,11 @@ function Out-JsonDocument
         [int]$paragraph = 1
 
         ## Generating header
-        [ref] $null = $jsonBuilder.Add("header", (Out-JsonHeaderFooter -Header -FirstPage))
+        $header = Out-JsonHeaderFooter -Header -FirstPage
+        if ($null -ne $header) {
+            [ref] $null = $jsonBuilder.Add("header", $header)
+            [ref] $null = $header
+        }
 
         foreach ($subSection in $Document.Sections.GetEnumerator())
         {
@@ -68,7 +72,7 @@ function Out-JsonDocument
                 # }
                 'PScribo.TOC'
                 {
-                     $jsonBuilder.Add("toc", (Out-JsonTOC -TOC $subSection))
+                    [ref] $null = $jsonBuilder.Add("toc", (Out-JsonTOC -TOC $subSection))
                 }
                 Default
                 {
@@ -78,7 +82,11 @@ function Out-JsonDocument
         }
 
         ## Generating footer
-        [ref] $null = $jsonBuilder.Add("footer", (Out-JsonHeaderFooter -Footer))
+        $footer = Out-JsonHeaderFooter -Footer
+        if ($null -ne $footer) {
+            [ref] $null = $jsonBuilder.Add("footer", $footer)
+            [ref] $null = $footer
+        }
 
         $stopwatch.Stop()
         Write-PScriboMessage -Message ($localized.DocumentProcessingCompleted -f $Document.Name)
