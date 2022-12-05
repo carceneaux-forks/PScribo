@@ -34,7 +34,7 @@ function Out-JsonTable
         ## Rendering the table
         if ($Table.IsKeyedList)
         {
-            Write-Output "Keyed List"
+            Write-Host "Keyed List"
             ## Create new objects with headings as properties
             # $tableText = (ConvertTo-PSObjectKeyedListTable -Table $Table |
             #                 Select-Object -Property * -ExcludeProperty '*__Style' |
@@ -45,7 +45,7 @@ function Out-JsonTable
         }
         elseif ($Table.IsList)
         {
-            Write-Output "List"
+            Write-Host "List"
             # $tableText = ($Table.Rows |
             #     Select-Object -Property * -ExcludeProperty '*__Style' |
             #         Format-List | Out-String).Trim([System.Environment]::NewLine)
@@ -54,7 +54,7 @@ function Out-JsonTable
         }
         else
         {
-            Write-Output "Not a List"
+            Write-Host "Not a List"
             ## Don't trim tabs for table headers
             ## Tables set to AutoSize as otherwise rendering is different between PoSh v4 and v5
             # $tableText = ($Table.Rows |
