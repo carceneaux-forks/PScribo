@@ -58,14 +58,19 @@ function Out-JsonDocument
 
         foreach ($subSection in $Document.Sections.GetEnumerator())
         {
-            # Write-Host ($subSection | ConvertTo-Json -Depth 100)
+            # Write-Host "Type: $($subSection.Type)"
             switch ($subSection.Type)
             {
                 'PScribo.Section'
                 {
-                    # Write-Host ($jsonBuilder | ConvertTo-Json -Depth 100)
-                    # Write-Host "Number: $($subSection.Number)"
-                    [ref] $null = $jsonBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))
+                    if ($null -eq $subSection.Number)
+                    {
+                        [ref] $null = $jsonBuilder.Add($subSection.Name, (Out-JsonSection -Section $subSection))
+                    }
+                    else
+                    {
+                        [ref] $null = $jsonBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))
+                    }
                 }
                 'PScribo.Paragraph'
                 {

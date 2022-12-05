@@ -33,10 +33,17 @@ function Out-JsonSection
             {
                 'PScribo.Section'
                 {
-                    Write-Host ($subSection | Select-Object -Property * -ExcludeProperty 'Sections' | ConvertTo-Json -Depth 100)
+                    # Write-Host ($subSection | Select-Object -Property * -ExcludeProperty 'Sections' | ConvertTo-Json -Depth 100)
                     # Write-Host ($sectionBuilder | ConvertTo-Json -Depth 100)
                     # Write-Host "Number: $($subSection.Number)"
-                    [ref] $null = $sectionBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))
+                    if ($null -eq $subSection.Number)
+                    {
+                        [ref] $null = $sectionBuilder.Add($subSection.Name, (Out-JsonSection -Section $subSection))
+                    }
+                    else
+                    {
+                        [ref] $null = $sectionBuilder.Add($subSection.Number, (Out-JsonSection -Section $subSection))
+                    }
                 }
                 'PScribo.Paragraph'
                 {
