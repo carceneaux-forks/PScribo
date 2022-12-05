@@ -58,11 +58,11 @@ function Out-JsonDocument
 
         foreach ($subSection in $Document.Sections.GetEnumerator())
         {
+            Write-Host "Type: $($subSection.Type)"
             switch ($subSection.Type)
             {
                 'PScribo.Section'
                 {
-                    Write-Host "Section"
                     Write-Host $jsonBuilder
                     Write-Host "Number: $($subSection.Number)"
                     $object = Out-JsonSection -Section $subSection
@@ -71,19 +71,16 @@ function Out-JsonDocument
                 }
                 'PScribo.Paragraph'
                 {
-                    Write-PScriboMessage -Message "Paragraph" -IsDebug
                     [ref] $null = $jsonBuilder.Add("paragraph$($paragraph)", (Out-JsonParagraph -Paragraph $subSection))
                     $paragraph++
                 }
                 'PScribo.Table'
                 {
-                    Write-Host "Table"
                     [ref] $null = $jsonBuilder.Add("table$($table)", (Out-JsonTable -Table $subSection))
                     $table++
                 }
                 'PScribo.TOC'
                 {
-                    Write-Host "TOC"
                     [ref] $null = $jsonBuilder.Add("toc", (Out-JsonTOC -TOC $subSection))
                 }
                 Default
