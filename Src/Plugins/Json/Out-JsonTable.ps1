@@ -36,8 +36,10 @@ function Out-JsonTable
             elseif ($Table.IsList)
             {
                 Write-Host "List"
-                Write-Host $row.Name
-                Write-Host $row | Select-Object -Property * -ExcludeProperty '__Style' | ConvertTo-Json -Depth 100  
+                Write-Host $row
+                $object = $row | Select-Object -Property * -ExcludeProperty '*__Style'
+                $json = $object | ConvertTo-Json -Depth 100  
+                Write-Host $json
                 # $tableText = ($Table.Rows |
                 #     Select-Object -Property * -ExcludeProperty '*__Style' |
                 #         Format-List | Out-String).Trim([System.Environment]::NewLine)
