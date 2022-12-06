@@ -26,7 +26,7 @@ function Out-JsonTable
         }
 
         [ref] $null = $tableBuilder.Add(($Table.Rows | Select-Object -Property * -ExcludeProperty '*__Style'))
-        Write-Host "tableBuilder: $($tableBuilder.Count)"
+        Write-Host "tableBuilder: $($tableBuilder[0].Count)"
         Write-Host "tableBuilder[1]: $($tableBuilder[1].Count)"
         Write-Host ":::: END ::::"
         return $tableBuilder
