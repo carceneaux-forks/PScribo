@@ -53,11 +53,11 @@ function Out-JsonHeaderFooter
                     }
                 }
             }
+
+            return $hfBuilder
         }
         else {
             return $null
         }
-
-        return $hfBuilder
     }
 }
