@@ -19,7 +19,7 @@ function Out-JsonTOC {
         foreach ($tocEntry in $Document.TOC) {
             [ref] $null = $tocBuilder.Add($tocEntry.Number, $tocEntry.Name)
         }
-        Write-Host ($tocBuilder | ConvertTo-Json -Depth 100)
+
         return ($tocBuilder)
     }
 }
