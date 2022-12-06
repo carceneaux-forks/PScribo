@@ -19,7 +19,7 @@ function Out-JsonTable
     process
     {
         Write-Host ":::: BEGINNING ::::"
-        Write-Host $Table.Rows
+        Write-Host $Table.Rows.GetType()
         # Write-Host "Table: $($Table.Rows.Length)"
         if ($Table.HasCaption)
         {
