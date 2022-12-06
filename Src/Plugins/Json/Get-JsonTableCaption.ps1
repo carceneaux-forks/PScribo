@@ -14,8 +14,8 @@ function Get-JsonTableCaption
     )
     process
     {
-        $caption = '{0} {1} {2}' -f $tableStyle.CaptionPrefix, $Table.CaptionNumber, $Table.Caption
+        $tableStyle = Get-PScriboDocumentStyle -TableStyle $Table.Style
 
-        return $caption
+        return ('{0} {1} {2}' -f $tableStyle.CaptionPrefix, $Table.CaptionNumber, $Table.Caption)
     }
 }
