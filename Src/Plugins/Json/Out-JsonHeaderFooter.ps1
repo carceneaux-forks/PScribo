@@ -54,6 +54,9 @@ function Out-JsonHeaderFooter
                 }
             }
         }
+        else {
+            return $null
+        }
 
         return $hfBuilder
     }
