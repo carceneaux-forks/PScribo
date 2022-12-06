@@ -14,10 +14,8 @@ function Out-JsonTable
     process
     {
         if ($Table.HasCaption)
-        {            
-            $caption = Get-JsonTableCaption -Table $Table
-            Write-Host $Table.Rows.Add([PSCustomObject] @{caption = $caption})
-            [ref] $null = $caption
+        {
+            [ref] $null = $Table.Rows.Add((Get-JsonTableCaption -Table $Table))
         }
 
         return ($Table.Rows | Select-Object -Property * -ExcludeProperty '*__Style')
