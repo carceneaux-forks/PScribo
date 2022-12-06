@@ -15,9 +15,9 @@ function Out-JsonTable
     {
         if ($Table.HasCaption)
         {            
-            $caption = Get-TextTableCaption -Table $Table
-            Write-Host $caption
-            [ref] $null = $Table.Rows | Add-Member -NotePropertyName Caption -NotePropertyValue $caption
+            [PSCustomObject] $caption = Get-TextTableCaption -Table $Table
+            $Table.Rows += $caption
+            [ref] $null = $caption
         }
 
         return ($Table.Rows | Select-Object -Property * -ExcludeProperty '*__Style')

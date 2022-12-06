@@ -14,15 +14,10 @@ function Get-JsonTableCaption
     )
     process
     {
-        # $tableStyle = Get-PScriboDocumentStyle -TableStyle $Table.Style
-        # $convertToAlignedStringParams = @{
-        #     InputObject = '{0} {1} {2}' -f $tableStyle.CaptionPrefix, $Table.CaptionNumber, $Table.Caption
-        #     Width       = 0
-        #     Tabs        = $Table.Tabs
-        #     Align       = $tableStyle.Align
-        # }
         $caption = '{0} {1} {2}' -f $tableStyle.CaptionPrefix, $Table.CaptionNumber, $Table.Caption
 
-        return $caption
+        return [PSCustomObject] @{
+            caption = $caption
+        }
     }
 }
