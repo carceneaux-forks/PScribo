@@ -19,14 +19,22 @@ function Out-JsonHeaderFooter
         [Parameter(Mandatory, ValueFromPipeline, ParameterSetName = 'FirstPageFooter')]
         [System.Management.Automation.SwitchParameter] $FirstPage
     )
+    begin
+    {
+        ## Initializing header/footer object
+        $hfBuilder = [ordered]@{}
+
+        ## Initializing paragraph counter
+        [int]$paragraph = 1
+
+        ## Initializing table counter
+        [int]$table = 1
+    }
     process
     {
         $headerFooter = Get-PScriboHeaderFooter @PSBoundParameters
         if ($null -ne $headerFooter)
         {
-            [System.Text.StringBuilder] $hfBuilder = New-Object System.Text.StringBuilder
-            [ref] $null = $hfBuilder.AppendLine('[')
-
             foreach ($subSection in $headerFooter.Sections.GetEnumerator())
             {
                 ## When replacing tokens (by reference), the tokens are removed
@@ -35,19 +43,18 @@ function Out-JsonHeaderFooter
                 {
                     'PScribo.Paragraph'
                     {
-                        $paragraph = Out-JsonParagraph -Paragraph $cloneSubSection
-                        [ref] $null = $hfBuilder.Append($paragraph)
+                        [ref] $null = $hfBuilder.Add("paragraph$($paragraph)", (Out-JsonParagraph -Paragraph $cloneSubSection))
+                        $paragraph++
                     }
                     'PScribo.Table'
                     {
-                        $table = Out-JsonTable -Table $cloneSubSection
-                        [ref] $null = $hfBuilder.Append($table)
+                        [ref] $null = $hfBuilder.Add("table$($table)", (Out-JsonTable -Table $cloneSubSection))
+                        $table++
                     }
                 }
             }
-
-            [ref] $null = $hfBuilder.AppendLine(']')
-            return $hfBuilder.ToString()
         }
+
+        return $hfBuilder
     }
 }
