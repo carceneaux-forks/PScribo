@@ -17,7 +17,7 @@ function Get-JsonTableCaption
         $tableStyle = Get-PScriboDocumentStyle -TableStyle $Table.Style
 
         return [PSCustomObject] @{
-            Caption = ('{0} {1} - {2}' -f $tableStyle.CaptionPrefix, $Table.CaptionNumber, $Table.Caption)
+            Caption = ('{0} {1} {2}' -f $tableStyle.CaptionPrefix, $Table.CaptionNumber, $Table.Caption)
         }
     }
 }
