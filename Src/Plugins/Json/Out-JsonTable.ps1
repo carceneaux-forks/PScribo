@@ -15,7 +15,7 @@ function Out-JsonTable
     {
         if ($Table.HasCaption)
         {
-            [ref] $null = $Table.Rows.Add((Get-JsonTableCaption -Table $Table))
+            [ref] $null = $Table.Rows.Insert(0, (Get-JsonTableCaption -Table $Table))
         }
 
         return ($Table.Rows | Select-Object -Property * -ExcludeProperty '*__Style')
