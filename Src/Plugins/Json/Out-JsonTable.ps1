@@ -18,13 +18,16 @@ function Out-JsonTable
     }
     process
     {
+        Write-Host ":::: BEGINNING ::::"
+        Write-Host "Table: $($Table.Length)"
         if ($Table.HasCaption)
         {
             [ref] $null = $tableBuilder.Add((Get-JsonTableCaption -Table $Table))
         }
 
         [ref] $null = $tableBuilder.Add(($Table.Rows | Select-Object -Property * -ExcludeProperty '*__Style'))
-
+        Write-Host "tableBuilder: $($tableBuilder.Length)"
+        Write-Host ":::: END ::::"
         return $tableBuilder
     }
 }
