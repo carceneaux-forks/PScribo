@@ -14,8 +14,10 @@ function Out-JsonTable
     process
     {
         if ($Table.HasCaption)
-        {
-            # [ref] $null = $tableBuilder.AppendFormat('"caption": "{0}"', $Table.Caption).AppendLine()
+        {            
+            $caption = Get-TextTableCaption -Table $Table
+            Write-Host $caption
+            [ref] $null = $Table.Rows | Add-Member -NotePropertyName Caption -NotePropertyValue $caption
         }
 
         return ($Table.Rows | Select-Object -Property * -ExcludeProperty '*__Style')

@@ -21,8 +21,8 @@ function Get-JsonTableCaption
         #     Tabs        = $Table.Tabs
         #     Align       = $tableStyle.Align
         # }
-        $output = '{0} {1}' -f $Table.CaptionNumber, $Table.Caption
+        $caption = '{0} {1} {2}' -f $tableStyle.CaptionPrefix, $Table.CaptionNumber, $Table.Caption
 
-        return $output
+        return $caption
     }
 }
