@@ -11,11 +11,11 @@
     "paragraph10": "This is a regular line of text in the default font in bold italics",
     "paragraph11": "This is a regular line of text in the default font in 14 point",
     "paragraph12": "This is a regular line of text in Courier New font",
-    "paragraph13": "This is a regular line of text indented 0 tab stops with the computer name as data: VBR",
-    "paragraph14": "This is a regular line of text indented 0 tab stops with the computer name as data in bold: VBR",
-    "paragraph15": "This is a regular line of text indented 0 tab stops with the computer name as data in bold italics: VBR",
-    "paragraph16": "This is a regular line of text indented 0 tab stops with the computer name as data in 14 point bold italics: VBR",
-    "paragraph17": "This is a regular line of text indented 0 tab stops with the computer name as data in 8 point Courier New bold italics: VBR",
+    "paragraph13": "This is a regular line of text indented 0 tab stops with the computer name as data: OFFICEPC",
+    "paragraph14": "This is a regular line of text indented 0 tab stops with the computer name as data in bold: OFFICEPC",
+    "paragraph15": "This is a regular line of text indented 0 tab stops with the computer name as data in bold italics: OFFICEPC",
+    "paragraph16": "This is a regular line of text indented 0 tab stops with the computer name as data in 14 point bold italics: OFFICEPC",
+    "paragraph17": "This is a regular line of text indented 0 tab stops with the computer name as data in 8 point Courier New bold italics: OFFICEPC",
     "1": {
         "name": "Standard-Style Tables",
         "1.1": {
