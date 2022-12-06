@@ -16,8 +16,6 @@ function Get-JsonTableCaption
     {
         $caption = '{0} {1} {2}' -f $tableStyle.CaptionPrefix, $Table.CaptionNumber, $Table.Caption
 
-        return [PSCustomObject] @{
-            caption = $caption
-        }
+        return $caption
     }
 }
